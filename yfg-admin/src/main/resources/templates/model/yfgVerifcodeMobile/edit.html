@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-yfgVerifcodeMobile-edit" th:object="${yfgVerifcodeMobile}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">用户手机号：</label>
+				<div class="col-sm-8">
+					<input id="mobilePhone" name="mobilePhone" th:field="*{mobilePhone}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">信短验证码：</label>
+				<div class="col-sm-8">
+					<input id="vercode" name="vercode" th:field="*{vercode}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">创建时间：</label>
+				<div class="col-sm-8">
+					<input id="createDate" name="createDate" th:field="*{createDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">验证码：</label>
+				<div class="col-sm-8">
+					<input id="code" name="code" th:field="*{code}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "model/yfgVerifcodeMobile";
+		$("#form-yfgVerifcodeMobile-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-yfgVerifcodeMobile-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

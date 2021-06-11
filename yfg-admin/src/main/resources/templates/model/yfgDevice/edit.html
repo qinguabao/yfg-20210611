@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-yfgDevice-edit" th:object="${yfgDevice}">
+			<input name="deptId"  type="hidden"  th:field="*{deptId}" id="treeId"/>
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">设备物理编码：</label>
+				<div class="col-sm-8">
+					<input id="deviceId" name="deviceId" th:field="*{deviceId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">设备名称：</label>
+				<div class="col-sm-8">
+					<input id="deviceName" name="deviceName" th:field="*{deviceName}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">单价/分：</label>
+				<div class="col-sm-8">
+					<input id="price" name="price" th:field="*{price}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">城市编码：</label>
+				<div class="col-sm-8">
+					<input id="cityCode" name="cityCode" th:field="*{cityCode}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">区域：</label>
+				<div class="col-sm-8">
+					<input id="area" name="area" th:field="*{area}" class="form-control" type="text">
+				</div>
+			</div>
+			
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">sim卡号：</label>
+				<div class="col-sm-8">
+					<input id="simNo" name="simNo" th:field="*{simNo}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">经度：</label>
+				<div class="col-sm-8">
+					<input id="deviceX" name="deviceX" th:field="*{deviceX}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">维度：</label>
+				<div class="col-sm-8">
+					<input id="deviceY" name="deviceY" th:field="*{deviceY}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">联系人：</label>
+				<div class="col-sm-8">
+					<input id="resPerson" name="resPerson" th:field="*{resPerson}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">电话：</label>
+				<div class="col-sm-8">
+					<input id="connMobile" name="connMobile" th:field="*{connMobile}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remarks" name="remarks" th:field="*{remarks}" class="form-control" type="text">
+				</div>
+			</div>
+			<div th:if="${channel_flag=='0'}">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span style="color: red; ">*</span>归属部门：</label>
+					<div class="col-sm-8">
+						<div class="input-group">
+							<input class="form-control" type="text" name="deptName" onclick="selectDeptTree()" id="treeName" th:field="*{dept.deptName}" required>
+							<span class="input-group-addon"><i class="fa fa-search"></i></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+
+	<div class="row">
+
+	</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "model/yfgDevice";
+		$("#form-yfgDevice-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-yfgDevice-edit').serialize());
+	        }
+	    }
+
+		/*用户管理-修改-选择部门树*/
+		function selectDeptTree() {
+			var deptId = $.common.isEmpty($("#treeId").val()) ? "100" : $("#treeId").val();
+			var url = ctx + "system/dept/selectDeptTree/" + deptId;
+			var options = {
+				title: '选择部门',
+				width: "380",
+				url: url,
+				callBack: doSubmit
+			};
+			$.modal.openOptions(options);
+		}
+
+		function doSubmit(index, layero){
+			var tree = layero.find("iframe")[0].contentWindow.$._tree;
+			if ($.tree.notAllowParents(tree)) {
+				var body = layer.getChildFrame('body', index);
+				$("#treeId").val(body.find('#treeId').val());
+				$("#treeName").val(body.find('#treeName').val());
+				layer.close(index);
+			}
+		}
+	</script>
+</body>
+</html>

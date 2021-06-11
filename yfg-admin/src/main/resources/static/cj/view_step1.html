@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>资料填写（TEST）</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style"
+    	content="black-translucent">
+	
+    <link href="css/mobiscroll.custom-3.0.0-beta2.min.css" rel="stylesheet" type="text/css">
+    <link href="css/s_common.css?v=20161222" rel="stylesheet" type="text/css">
+    	<style>
+    		h2{
+    			text-align: center;
+    			margin-top: 0.5rem;
+    		}
+    		h2 img{
+    			display: inline-block;
+    			width: 5rem;
+    		}
+    		.appleInfo{
+    			
+    		}
+    	</style>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+    <script type="text/javascript" src="js/json2.js"></script>
+    <script type="text/javascript" src="js/s_common.js"></script>
+</head>
+
+<body>
+<!-- 资料填写第一步 -->
+<div class="view-step1-page" >
+    <div class="cs-info-main">
+        <div class="cs-dt-main">
+        	<h2><img  src="./images/state1.png" /></h2>
+            <h3 id="viewSteptl" style="margin-bottom: 20px;color: #3598db;font-size: 1rem;">审核期间，暂不允许修改</h3>
+            <!--<div class="cs-stu-item-tr1">姓名<span class="req">*</span>：</div>
+            <div class="cs-stu-item-tr"><input id="owner_name" readonly="readonly" class="cs-width100 user_name" type="text" placeholder="请输入姓名"  maxlength="6" /></div>
+            
+            <div class="cs-stu-item-tr cs-box" style="margin-top: 0.4rem">性别<span class="req">*</span>：<div class="cs-gender-box cs-box-flex1 cs-box"><div class="choosebox" flag="1"></div><div>男</div></div><div class="cs-gender-box cs-box-flex1 cs-box"><div class="choosebox" flag="2"></div><div>女</div></div></div>-->
+            
+         <!--   <div class="cs-stu-item-tr1">学校类型<span class="req">*</span>：</div>-->
+          <!--  <div class="cs-stu-item-tr"><input type="text" readonly="readonly" class="cs-width100 mbsc-control-ev" id="stu_schooltype" /></div>-->
+            <!--<div class="cs-stu-item-tr1">毕业年份<span class="req">*</span>：</div>
+            <div class="cs-stu-item-tr"><input type="text" readonly="readonly" class="cs-width100 mbsc-control-ev" id="stu_remark_fiveInput" /></div>-->
+            
+            <!--<div class="cs-stu-item-tr1">联系电话：</div>
+            <div class="cs-stu-item-tr"><input id="remark_one" class="cs-width100" readonly="readonly" type="text" placeholder="请输入区号-座机号码" maxlength="60" /></div>
+            
+            
+            <div class="cs-stu-item-tr1">身份证号<span class="req">*</span>：<span class="note">(证件中有字母需大写)</span></div>
+            <div class="cs-stu-item-tr"><input id="idCardNumber" class="cs-width100" readonly="readonly" type="text" placeholder="请输入真实身份证号码" maxlength="40" /></div>
+            
+            <div class="cs-stu-item-tr1">手机号码<span class="req">*</span>：</div>
+            <div class="cs-stu-item-tr"><input id="remark_two" class="cs-width100" readonly="readonly" type="text" placeholder="可用移动、联通、电信手机号码" maxlength="50" /></div>-->
+            <ul class="appleInfo">
+            	<li><p>姓名:</p><span id = 'owner_name'></span></li>
+            	<li><p>性别:</p><span id = 'sex'></span></li>
+            	<li><p>联系电话:</p><span id = 'moble'></span></li>
+            	<li><p>身份证号:</p><span id = 'idCard'></span></li>
+            	<li><p>手机号码:</p><span id = 'telephone'></span></li>
+            	<li><p>领取方式:</p><span id = 'applyType'></span></li>
+            	<li><p>费用:</p><span id = 'applyMoney'></span></li>
+            	<li><p>收件人姓名:</p><span id = 'receiveName'></span></li>
+            	<li><p>收件人电话:</p><span id = 'receivePhone'></span></li>
+            	<li><p>收件地址:</p><span id = 'receiveAddress'></span></li>
+            </ul>
+        </div>
+        
+        
+        
+        <div class="cs-dt-main">
+            <div class="">
+            	<p></p>
+            	<span></span>
+            </div>
+            <div class="cs-stu-item-tr" style="width: 30%;float: left;">个人照片<span class="req">*</span>：</div>
+            <div class="cs-picdiv" style="width: 30%;">
+		        <div id="preview-idPic1" class="pre-img" style=""><img class="css-addimg-img" id="imgidPic1" src=""/></div>
+            </div>
+             <div class="cs-stu-item-tr" style="width: 60%;float: left;">学生证明文件<span class="req">*</span>:</div>
+            <div class="cs-picdiv" style="width: 60%;">
+                <div id="preview-idPic4" class="pre-img"><img class="css-addimg-img" id="imgidPic4" src=""/></div>
+            </div>
+            <div class="clear"></div>
+            
+            <div class="cs-stu-item-tr">身份证明文件<span class="req">*</span>：</div>
+            <div class="cs-picdiv">
+                <div id="preview-idPic2" class="pre-img"><img class="css-addimg-img" id="imgidPic2" src=""/></div>
+            </div>
+            
+            <div class="cs-picdiv" style="margin-top: 10px;">
+                <div id="preview-idPic3" class="pre-img" ><img class="css-addimg-img" id="imgidPic3" src=""/></div>
+            </div>
+            
+            <div class="clear"></div>
+            
+           
+       </div>
+    </div>
+    <div class="clear" style="height: 2rem;">&nbsp;</div>
+    <div class="cs-dt-footer"><div class="cs-btn-next">返回</div></div>
+    <div class="clear" style="height: 2rem">&nbsp;</div>
+</div>
+
+<script type="text/javascript">
+var _identifid = '2088112739916928';
+if (_identifid == "" || _identifid =="undefined") {
+	self.location = 'https://whtpay.whbaw.cn/paytest/alipayStuTest/index.php';
+}
+var _pkid = window.location.href.split('?')[1].split('=')[1];
+console.log(_pkid);
+
+//获取订单信息
+function getStuInfoData() {
+	$.ajax({//查询用户是否注册 详情接口
+				type:"post",
+				url:"http://collection.qinguobao.xyz/caiji/nfc/terface4mobilefront",
+				data:{
+					tag:'1007',
+					open_id:'25436',
+				},
+				success:function(data){
+					data = JSON.parse(data);
+					console.log(data);
+        			localStorage.clear();
+        			var cardInfo = {};
+        			for(var i = 0;i<data.length;i++){
+        				if(data[i].id==_pkid){
+        					cardInfo = data[i]
+        				}
+        			}
+        			console.log(cardInfo);
+              $("#owner_name").html(cardInfo['apply_name']||'无');
+                if (cardInfo['gender'] == '1') {
+                  //  $($(".choosebox")[0]).addClass("choosebox-select");
+                	$("#sex").text("男");
+                } else if (cardInfo['gender'] == '2') {
+                	//$($(".choosebox")[1]).addClass("choosebox-select");
+                	$("#sex").text("女");
+                }
+                if(cardInfo['apply_type']==0){//邮寄
+                	$('#applyType').html('邮寄');
+                	var allMoney = (cardInfo['card_fee']*1+cardInfo['mail_fee']*1)/100
+                	 $('#applyMoney').html(allMoney.toFixed(2)+'元');
+                }else{
+                	$('#applyType').html('自取');
+                	$("#receiveName").hide();
+	            	$("#receivePhone").hide();
+	            	$("#receiveAddress").hide();
+	            	$('#applyMoney').html(((cardInfo['card_fee']*1)/100).toFixed(2)+'元');
+                }
+
+                $("#moble").html(cardInfo['connect_mobile']||'无');  //联系电话
+                $("#idCard").html(cardInfo['id_card_num']||'无');  //IDcard
+                $("#telephone").html(cardInfo['connect_telphone']||'无');//手机号码
+				$("#receiveName").html(cardInfo['rec_name']||'无');
+            	$("#receivePhone").html(cardInfo['mobile']||'无');
+            	$("#receiveAddress").html(cardInfo['rec_address']||'无');
+
+          		$("#imgidPic1").attr("src",'http://'+cardInfo['image_one']);
+            	$("#imgidPic2").attr("src",'http://'+cardInfo['image_two']);
+            	$("#imgidPic3").attr("src",'http://'+cardInfo['image_three']);
+            	$("#imgidPic4").attr("src",'http://'+cardInfo['image_four']);
+
+
+//          	if (jsonobj['auditState'] == "5") {
+//              	if (jsonobj['amount'] == "2000" || "" == jsonobj['receiname'] || null ==  jsonobj['receiname'] || "" == jsonobj['receimob'] || null ==  jsonobj['receimob']) {
+//              		$("#viewSteptl").text("自取用户的卡片已发往江汉路客服点，请于7个工作日内领取");
+//                  } else {
+//                  	$("#viewSteptl").text("邮寄用户的卡片已寄出，请注意查收");
+//                  }
+//          		
+//              } else if (jsonobj['auditState'] == "2") {
+//          		$("#viewSteptl").text("制卡中，不允许修改");
+//              }
+//
+//
+//              if (jsonobj['isPay'] == "6" || jsonobj['amount'] == "2000" || "" == jsonobj['receiname'] || null ==  jsonobj['receiname'] || "" == jsonobj['receimob'] || null ==  jsonobj['receimob'] ) {
+//              	$(".cs-adr_rece").hide();
+//              }
+                
+            
+            
+        	//console.log(data);
+        },
+        error:function (XMLHttpRequest, textStatus, errorThrown){
+        }
+		
+	});
+}
+
+$(function () {
+	var time1 = new Date().Format("yyyyMMdd");
+	$("#cyear").val(time1);
+	
+	getStuInfoData();
+	
+    //下一步
+    $(".cs-btn-next").click(function () {
+    	self.location = "index.html";
+    });
+    
+})
+
+</script>
+</body>
+</html>

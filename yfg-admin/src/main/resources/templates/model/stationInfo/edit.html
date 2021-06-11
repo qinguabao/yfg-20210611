@@ -1,0 +1,247 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-stationInfo-edit" th:object="${stationInfo}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+            <div class="form-group">	
+				<label class="col-sm-3 control-label">省份/直辖市：</label>
+				<div class="col-sm-8">
+					<input id="proName" th:field="*{proId}" style="display: none;">
+					<select name="proId" id="proId" th:field="*{proId}" class="form-control" onchange="findCity();" required="required">
+					</select>
+				</div>
+			</div>
+			<div class="form-group">	
+
+				<label class="col-sm-3 control-label">城市：</label>
+				<div class="col-sm-8">
+					<input id="cityName" th:field="*{cityId}" style="display: none;">
+					 <select name="cityId" id="cityId" th:field="*{cityId}" class="form-control" onchange="findCounty();" required="required">
+					</select> 
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">区县：</label>
+				<div class="col-sm-8">
+					<input id="countyName" th:field="*{countyId}" style="display: none;">
+					<select name="countyId" id="countyId" th:field="*{countyId}" required="required" class="form-control">
+					</select>
+				</div>
+			</div> 
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">网点名称：</label>
+				<div class="col-sm-8">
+					<input id="stationName" name="stationName" th:field="*{stationName}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">详细地址：</label>
+				<div class="col-sm-8">
+					<input id="stationAddress" name="stationAddress" th:field="*{stationAddress}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">联系电话：</label>
+				<div class="col-sm-8">
+					<input id="stationMobile" name="stationMobile" th:field="*{stationMobile}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">联系人：</label>
+				<div class="col-sm-8">
+					<input id="stationConnectPerson" name="stationConnectPerson" th:field="*{stationConnectPerson}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">网点服务时间：</label>
+				<div class="col-sm-8">
+					<input id="stationNetTime" name="stationNetTime" th:field="*{stationNetTime}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">网点服务信息：</label>
+				<div class="col-sm-8">
+					<input id="stationServerInfo" name="stationServerInfo" th:field="*{stationServerInfo}" class="form-control" type="text">
+				</div>
+			</div>
+			
+	 		<div class="form-group">	
+				<label class="col-sm-3 control-label">网点状态：</label>
+				<div class="col-sm-8">
+					<input id="stationStatusName" th:field="*{stationStatus}" style="display: none;"> 
+					<select name="stationStatus" id="stationStatus" th:field="*{stationStatus}" class="form-control" required="required">
+					</select>
+				</div>
+			</div>
+		
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remarks" name="remarks" th:field="*{remarks}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "model/stationInfo";
+		$("#form-stationInfo-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-stationInfo-edit').serialize());
+	        }
+	    }
+		$(function(){
+			findpName();
+			findCity();
+			findCounty();
+			findStatus();
+		})
+		//初始化查询条件省份/直辖市
+		function findpName(){
+			var proName=$("#proName").val()
+			var options="";
+			$.ajax({
+				type:"post",
+				url:  ctx + "model/sysAreaCity/findPro",
+				dataType: "json",
+				sync:false,
+				data: ({
+					pID : 0
+				}),
+				success: function (tipInfo)
+				{
+					if(tipInfo.length>0){
+						for(var i=0;i<tipInfo.length;i++){
+							if(tipInfo[i].id==proName){
+								options += '<option value="' + tipInfo[i].id + '" selected="selected">' + tipInfo[i].name + '</option>';
+							}else{
+								options += '<option value="' + tipInfo[i].id + '">' + tipInfo[i].name + '</option>';
+							}
+						}
+						$("#proId").empty().append('<option value="">请选择</option>').append(options);
+					}
+				},
+				//此处添加错误处理
+	    		error:function()
+	    		{
+	    			$.modal.alertWarning('查询省份/直辖市信息异常，请稍后再试！');
+					return;
+				}
+			});
+		}
+		//动态加载网点状态
+        function findStatus(){
+  			var options="";
+  			var stationStatusName=$("#stationStatusName").val();
+  			$.ajax({
+  				type:"post",
+  				url:  prefix + "/findStauts",
+  				dataType: "json",
+  				sync:false,
+				data: ({
+					dictType : 'col_station_status'
+				}),
+  				success: function (tipInfo)
+  				{
+  					if(tipInfo.length>0){
+  						for(var i=0;i<tipInfo.length;i++){
+							if(tipInfo[i].dictValue==stationStatusName){
+								options += '<option value="' + tipInfo[i].dictValue + '" selected="selected">' + tipInfo[i].dictLabel + '</option>';
+							}else{
+								options += '<option value="' + tipInfo[i].dictValue + '">' + tipInfo[i].dictLabel + '</option>';
+							}
+  						}
+  						$("#stationStatus").empty().append('<option value="">请选择</option>').append(options);
+  					}
+  				},
+  				//此处添加错误处理
+  	    		error:function()
+  	    		{
+  	    			$.modal.alertWarning('查询网点状态信息异常，请稍后再试！');
+  					return;
+  				}
+  			});
+        }
+		//根据省份/直辖市查询城市
+        function findCity(){
+        	var pID=$("#proId").val();
+        	var cityName=$("#cityName").val();
+        	var options="";
+			$.ajax({
+				type:"post",
+				url:  ctx + "model/sysAreaCity/findPro",
+				dataType: "json",
+				sync:false,
+				data: ({
+					pID : pID
+				}),
+				success: function (tipInfo)
+				{
+					if(tipInfo.length>0){
+						for(var i=0;i<tipInfo.length;i++){
+							if(tipInfo[i].id==cityName){
+								options += '<option value="' + tipInfo[i].id + '" selected="selected">' + tipInfo[i].name + '</option>';
+							}else{
+								options += '<option value="' + tipInfo[i].id + '">' + tipInfo[i].name + '</option>';
+							}
+						}
+						$("#cityId").empty().append('<option value="">请选择</option>').append(options);
+					}
+				},
+				//此处添加错误处理
+	    		error:function()
+	    		{
+	    			$.modal.alertWarning('查询城市信息异常，请稍后再试！');
+					return;
+				}
+			});
+        }
+      	//根据城市查询区县
+        function findCounty(){
+        	var pID=$("#cityId").val();
+        	var countyName=$("#countyName").val();
+        	var options="";
+			$.ajax({
+				type:"post",
+				url:  ctx + "model/sysAreaCity/findPro",
+				dataType: "json",
+				sync:false,
+				data: ({
+					pID : pID
+				}),
+				success: function (tipInfo)
+				{
+					if(tipInfo.length>0){
+						for(var i=0;i<tipInfo.length;i++){
+							if(tipInfo[i].id==countyName){
+								options += '<option value="' + tipInfo[i].id + '" selected="selected">' + tipInfo[i].name + '</option>';
+							}else{
+								options += '<option value="' + tipInfo[i].id + '">' + tipInfo[i].name + '</option>';
+							}
+						}
+						$("#countyId").empty().append('<option value="">请选择</option>').append(options);
+					}
+				},
+				//此处添加错误处理
+	    		error:function()
+	    		{
+	    			$.modal.alertWarning('查询区县信息异常，请稍后再试！');
+					return;
+				}
+			});
+        }
+	</script>
+</body>
+</html>

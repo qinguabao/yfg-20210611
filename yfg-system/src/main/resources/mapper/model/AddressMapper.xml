@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.model.mapper.AddressMapper">
+    
+    <resultMap type="Address" id="AddressResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="recName"    column="rec_name"    />
+        <result property="recAddress"    column="rec_address"    />
+        <result property="proId"    column="pro_id"    />
+        <result property="cityId"    column="city_id"    />
+        <result property="countyId"    column="county_id"    />
+        <result property="postcode"    column="postcode"    />
+        <result property="isDefault"    column="is_default"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+	
+	<sql id="selectAddressVo">
+        select id, user_id, mobile, rec_name, rec_address, pro_id, city_id, county_id, postcode, is_default, del_flag, remarks from col_address
+    </sql>
+	
+    <select id="selectAddressList" parameterType="Address" resultMap="AddressResult">
+        <include refid="selectAddressVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="userId != null "> and user_id = #{userId}</if>
+             <if test="mobile != null  and mobile != '' "> and mobile = #{mobile}</if>
+             <if test="recName != null  and recName != '' "> and rec_name = #{recName}</if>
+             <if test="recAddress != null  and recAddress != '' "> and rec_address = #{recAddress}</if>
+             <if test="proId != null "> and pro_id = #{proId}</if>
+             <if test="cityId != null "> and city_id = #{cityId}</if>
+             <if test="countyId != null "> and county_id = #{countyId}</if>
+             <if test="postcode != null  and postcode != '' "> and postcode = #{postcode}</if>
+             <if test="isDefault != null  and isDefault != '' "> and is_default = #{isDefault}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
+         </where>
+    </select>
+    
+    <select id="selectAddressById" parameterType="Integer" resultMap="AddressResult">
+        <include refid="selectAddressVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAddress" parameterType="Address" useGeneratedKeys="true" keyProperty="id">
+        insert into col_address
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null  ">user_id,</if>
+			<if test="mobile != null  and mobile != ''  ">mobile,</if>
+			<if test="recName != null  and recName != ''  ">rec_name,</if>
+			<if test="recAddress != null  and recAddress != ''  ">rec_address,</if>
+			<if test="proId != null  ">pro_id,</if>
+			<if test="cityId != null  ">city_id,</if>
+			<if test="countyId != null  ">county_id,</if>
+			<if test="postcode != null  and postcode != ''  ">postcode,</if>
+			<if test="isDefault != null  and isDefault != ''  ">is_default,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="remarks != null  and remarks != ''  ">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null  ">#{userId},</if>
+			<if test="mobile != null  and mobile != ''  ">#{mobile},</if>
+			<if test="recName != null  and recName != ''  ">#{recName},</if>
+			<if test="recAddress != null  and recAddress != ''  ">#{recAddress},</if>
+			<if test="proId != null  ">#{proId},</if>
+			<if test="cityId != null  ">#{cityId},</if>
+			<if test="countyId != null  ">#{countyId},</if>
+			<if test="postcode != null  and postcode != ''  ">#{postcode},</if>
+			<if test="isDefault != null  and isDefault != ''  ">#{isDefault},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="remarks != null  and remarks != ''  ">#{remarks},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateAddress" parameterType="Address">
+        update col_address
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null  ">user_id = #{userId},</if>
+            <if test="mobile != null  and mobile != ''  ">mobile = #{mobile},</if>
+            <if test="recName != null  and recName != ''  ">rec_name = #{recName},</if>
+            <if test="recAddress != null  and recAddress != ''  ">rec_address = #{recAddress},</if>
+            <if test="proId != null  ">pro_id = #{proId},</if>
+            <if test="cityId != null  ">city_id = #{cityId},</if>
+            <if test="countyId != null  ">county_id = #{countyId},</if>
+            <if test="postcode != null  and postcode != ''  ">postcode = #{postcode},</if>
+            <if test="isDefault != null  and isDefault != ''  ">is_default = #{isDefault},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="remarks != null  and remarks != ''  ">remarks = #{remarks},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteAddressById" parameterType="Integer">
+        delete from col_address where id = #{id}
+    </delete>
+	
+    <delete id="deleteAddressByIds" parameterType="String">
+        delete from col_address where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

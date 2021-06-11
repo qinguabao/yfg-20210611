@@ -1,0 +1,482 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<style>
+select{
+float:left;
+}
+lable{
+float:left;
+margin-top:7px;
+}
+.auditingUl{
+margin-left:60px;
+}
+</style>
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								申请人姓名：<input type="text" name="applyName" id="applyName" style="width: 148px;"/>
+							</li>
+
+							<li>
+								学生证号码：<input type="text" name="applyNumber" id="applyNumber" style="width: 148px;"/>
+							</li>
+							
+							<li>
+								身份证号码：<input type="text" name="idCardNum" id="idCardNum" style="width: 148px;"/>
+							</li>
+
+							<li>
+								<lable>优惠卡类型：</lable>
+								<select name="specialCardInfo" id="specialCardInfo" class="form-control" style="width: 148px;">
+								</select>
+							</li>
+							<li>
+								<lable>申请方式：</lable>
+								<select name="applyType" id="applyType" class="form-control" style="width: 148px;">
+								</select>
+							</li>
+							<li>
+								<lable>邮寄自取：</lable>
+								<select name="mailType" id="mailType" class="form-control" style="width: 148px;">
+								</select>
+							</li>
+
+						
+							<li>
+								快递单号：<input type="text" name="mailNo" id="mailNos" style="width: 148px;"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" id="serchBtn" onclick="$.table.search()" onmouseover="serchTime();"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="resetVal();"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <!-- <div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="model:cardUser:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="model:cardUser:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="model:cardUser:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="model:cardUser:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div> -->
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('model:cardUser:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('model:cardUser:remove')}]];
+        var gardenData=[[${@dict.getType('sys_user_sex')}]]; //性别
+        var specialCardInfo=[[${@dict.getType('special_card_info')}]]; //优惠卡类型
+        var applyStatus=[[${@dict.getType('cardUser_apply_status')}]]; //申请状态
+        var payStatus=[[${@dict.getType('cardUser_pay_status')}]]; //支付状态
+        var payType=[[${@dict.getType('cardUser_mail_type')}]];     //支付方式
+        var chargeInfo=[[${@dict.getType('cardUser_charge_info')}]]; //是否充值
+        var mailType=[[${@dict.getType('cardUser_mail_type')}]];     //支付方式
+        var rejectInfo=[[${@dict.getType('cardUser_reject_info')}]]; //驳回原因
+        var prefix = ctx + "model/cardUser";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "制卡",
+		        showExport: false,
+                columns: [
+				{
+					field : 'id', 
+					title : 'id',
+					visible: false
+				},
+				{
+					field : 'applyName', 
+					title : '申请人姓名'
+				},
+				{
+					field : 'applyNumber', 
+					title : '学生证号码'
+				},
+				{
+					field : 'gender', 
+					title : '性别',
+				    formatter: function(value, row, index) {
+			            return $.table.selectGardenName(gardenData,value);
+			       } 
+				},
+				{
+					field : 'specialCardInfo', 
+					title : '优惠卡类型',
+				    formatter: function(value, row, index) {
+			            return $.table.selectGardenName(specialCardInfo,value);
+			       } 
+				},
+				{
+					field : 'applyTime', 
+					title : '申请时间'
+				},
+				{
+					field : 'applyStatus', 
+					title : '申请状态',
+				    formatter: function(value, row, index) {
+			            return $.table.selectGardenName(applyStatus,value);
+			       } 
+				},
+
+				{
+					field : 'payAmount', 
+					title : '支付金额'
+				},
+				{
+					field : 'payStatus', 
+					title : '支付状态',
+				    formatter: function(value, row, index) {
+			            return $.table.selectGardenName(payStatus,value);
+			       } 
+				},
+			
+				{
+					field : 'payType', 
+					title : '支付方式',
+				    formatter: function(value, row, index) {
+			            return $.table.selectGardenName(payType,value);
+			       } 
+				},
+				{
+					field : 'mailNo', 
+					title : '快递单号'
+				},
+				{
+					field : 'rejectInfo', 
+					title : '驳回原因',
+				    formatter: function(value, row, index) {
+			            return $.table.selectGardenName(rejectInfo,value);
+			       } 
+				},
+				{
+					field : 'updateDate', 
+					title : '更新时间'
+				},
+				{
+					field : 'checkDate', 
+					title : '审核时间'
+				},
+				{
+					field : 'chargeInfo', 
+					title : '是否充值',
+				    formatter: function(value, row, index) {
+			            return $.table.selectGardenName(chargeInfo,value);
+			       } 
+				},
+				{
+					field : 'chargeAmount', 
+					title : '充值金额'
+				},
+				{
+					field : 'cardNum', 
+					title : '卡号'
+				},
+				{
+					field : 'frontUserId', 
+					title : '信息填写人'
+				},
+				{
+					field : 'netAddress', 
+					title : '收件地址'
+				},
+				{
+					field : 'remark', 
+					title : '备注'
+				},{
+					field : 'mailType', 
+					title : '邮寄自取',
+				    formatter: function(value, row, index) {
+			            return $.table.selectGardenName(mailType,value);
+			       } 
+				},
+				{
+					field : 'relationToApply', 
+					title : '与申请人关系'
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>详情</a> ');
+		            	if(row.applyStatus=="0"){
+			            	actions.push('&nbsp;<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="auditing(\'' + row.id + '\')"><i class="fa fa-edit"></i>审核</a> ');
+		            	}
+		            	if(row.applyStatus=="1"){
+			            	actions.push('&nbsp;<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="downLoadFile(\'' + row.id + '\')"><i class="fa fa-edit"></i>制卡下载</a> ');
+		            	}
+		            	if(row.applyStatus=="3"){
+			            	actions.push('&nbsp;<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="cardPrinting(\'' + row.id + '\')"><i class="fa fa-edit"></i>制卡完成</a> ');
+		            	}
+		            	if(row.applyStatus=="4"){
+			            	actions.push('&nbsp;<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="editLogistics(\'' + row.id + '\')"><i class="fa fa-edit"></i>发货</a> ');
+		            	}
+		            	return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+            findStatus('special_card_info','specialCardInfo'); //优惠卡类型
+            findStatus('cardUser_apply_type','applyType');     //申请方式 
+            findStatus('cardUser_mail_type','mailType');       //邮寄自取
+            findStatus('cardUser_reject_info','rejectInfo');   //驳回原因
+        });
+        //动态加载下拉选择数据
+        function findStatus(dictType,idName){
+  			var options="";
+  			$.ajax({
+  				type:"post",
+  				url:  ctx + "model/stationInfo/findStauts",
+  				dataType: "json",
+  				data: ({
+  					dictType : dictType
+  				}),
+  				success: function (tipInfo)
+  				{
+  					if(tipInfo.length>0){
+  						for(var i=0;i<tipInfo.length;i++){
+  							options += '<option value="' + tipInfo[i].dictValue + '">' + tipInfo[i].dictLabel + '</option>';
+  						}
+  						$("#"+idName+"").empty().append('<option value="">请选择</option>').append(options);
+  					}
+  				},
+  				//此处添加错误处理
+  	    		error:function()
+  	    		{
+  	    			$.modal.alertWarning('查询数据信息异常，请稍后再试！');
+  					return;
+  				}
+  			});
+        }
+        //重置按钮点击事件
+       function resetVal(){
+       	$("#applyName").val('');
+    	$("#applyNumber").val('');
+    	$("#idCardNum").val('');
+    	$("#specialCardInfo").val('');
+    	$("#applyType").val('');
+    	$("#mailType").val('');
+    	$("#mailNos").val('');
+    	$("#serchBtn").click();
+       }
+     //给搜索时间赋值
+       function serchTime(){
+     	var startTime=$("#startTime").val();
+       	if(startTime){
+       		$("#serchStartTime").val(startTime);
+       	}
+       	var endTime=$("#endTime").val();
+     	if(endTime){
+     		$("#serchEndTime").val(endTime);
+     	}
+     	var startUpdateTime=$("#startUpdateTime").val();
+     	if(startUpdateTime){
+     		$("#serchStartUpdateTime").val(startUpdateTime);
+     	}
+     	var endUpdateTime=$("#endUpdateTime").val();
+     	if(endUpdateTime){
+     		$("#serchEndUpdateTime").val(endUpdateTime);
+     	}
+       }
+       //审核界面
+       function auditing(id){
+    	   var remark="";
+    	   $("#rejectInfo").val("");
+    	   $("#remark").val("");
+           	layer.open({
+           		type: 1,
+           		area: ['400px', '230px'],
+           		fix: false,
+           		//不固定
+           		maxmin: true,
+           		shade: 0.3,
+           		content: $('#auditingForm'),
+           		title: '审核制卡信息',
+           		btn: ['<i class="fa fa-check"></i>通过', '<i class="fa fa-remove"></i> 驳回'],
+           		// 弹层外区域关闭
+           		//shadeClose: true,
+           		btn1: function(index, layero){
+           			var rejectInfo=$.trim($("#rejectInfo").val());
+           			remark=$.trim($("#remark").val());
+           			if(rejectInfo){
+           				$.modal.alertWarning('审核通过请不要选择驳回原因！');
+               			return;
+           			}
+           			auditingMess(id,remark,"1","");
+           			layer.close(index);
+           		},
+           		btn2: function(index, layero){
+           			$("#rejectInfo").attr("required",true);
+           			var rejectInfo=$("#rejectInfo").val();
+           			remark=$.trim($("#remark").val());
+           			var rejectInfo=$("#rejectInfo").val();
+           			if(!rejectInfo){
+           				$.modal.alertWarning('请选择驳回原因！');
+           				return false;
+           			}
+           			auditingMess(id,remark,"2",rejectInfo);
+           		}
+           	});
+       }
+       //审核的制卡信息id，审核备注，审核状态，驳回原因
+       function auditingMess(id,remark,applyStatus,rejectInfo){
+    	   $.ajax({
+				type:"post",
+				url:  prefix + "/auditing",
+				dataType: "json",
+				data: ({
+					id : id,
+					remark:remark,
+					applyStatus:applyStatus,
+					rejectInfo:rejectInfo
+				}),
+				success: function (tipInfo)
+				{
+					$("#serchBtn").click();
+				},
+				//此处添加错误处理
+	    		error:function()
+	    		{
+	    			$.modal.alertWarning('审核制卡信息异常，请稍后再试！');
+					return;
+				}
+			});
+       }
+       //发货界面
+       function editLogistics(id){
+           	layer.open({
+           		type: 1,
+           		area: ['400px', '230px'],
+           		fix: false,
+           		//不固定
+           		maxmin: true,
+           		shade: 0.3,
+           		content: $('#takeDeliveryForm'),
+           		title: '新增发货信息',
+           		btn: ['<i class="fa fa-check"></i>确定', '<i class="fa fa-remove"></i> 取消'],
+           		// 弹层外区域关闭
+           		shadeClose: true,
+           		btn1: function(index, layero){
+           			var companyName=$("#companyName").val();
+           			var mailNo=$("#mailNo").val();
+           			if(!companyName||!mailNo){
+           				$.modal.alertWarning('快递公司和快递单号不能为空');
+           				return;
+           			}
+           			$.ajax({
+        				type:"post",
+        				url:  prefix + "/editLogistics",
+        				dataType: "json",
+        				data: ({
+        					id : id,
+        					companyName:companyName,
+        					mailNo:mailNo
+        				}),
+        				success: function (tipInfo)
+        				{
+        					$("#serchBtn").click();
+        					layer.close(index);
+        				},
+        				//此处添加错误处理
+        	    		error:function()
+        	    		{
+        	    			$.modal.alertWarning('新增发货信息异常，请稍后再试！');
+        					return;
+        				}
+        			}); 
+           		},
+           		btn2: function(index, layero){
+           			$("#companyName").val("");
+           			$("#mailNo").val("");
+           		}
+           	});
+       }
+       //制卡文件下载
+       function downLoadFile(id){
+    	   window.open(prefix + "/downLoadFile?id="+id);
+    	   setTimeout(function(){
+    		   $("button[name='refresh']").click();
+    	   },500);
+       }
+       //制卡完成
+       function cardPrinting(id){
+    	   $.ajax({
+				type:"post",
+				url:  prefix + "/cardPrinting",
+				dataType: "json",
+				data: ({
+					id : id
+				}),
+				success: function (tipInfo)
+				{
+					$("#serchBtn").click();
+					layer.close(index);
+				},
+				//此处添加错误处理
+	    		error:function()
+	    		{
+	    			$.modal.alertWarning('审核制卡信息异常，请稍后再试！');
+					return;
+				}
+			});
+       }
+    </script>
+</body>
+<form id="auditingForm" enctype="multipart/form-data" class="mt20 mb10" style="display: none;">
+	<div class="select-list">
+		<ul class="auditingUl">
+			<li>
+				<lable>驳回原因：</lable>
+				<select name="rejectInfo" id="rejectInfo" class="form-control">
+				</select>
+			</li>
+			<li>
+				<lable>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</lable>
+				<input type="text" id="remark" name="remark" class="form-control" maxlength="100"/>
+			</li>
+		</ul>
+	</div>
+</form>
+<form id="takeDeliveryForm" enctype="multipart/form-data" method="post" class="mt20 mb10" style="display: none;">
+	<div class="select-list">
+		<ul class="auditingUl">
+			<li>
+				<lable>快递公司：</lable>
+				<input type="text" id="companyName" name="companyName" class="form-control" maxlength="32" required="required"/>
+			</li>
+			<li>
+				<lable>快递单号：</lable>
+				<input type="text" id="mailNo" name="mailNo" class="form-control" maxlength="100" required="required"/>
+			</li>
+		</ul>
+	</div>
+</form>
+</html>

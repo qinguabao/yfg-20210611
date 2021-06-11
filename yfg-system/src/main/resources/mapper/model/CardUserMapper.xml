@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.model.mapper.CardUserMapper">
+
+	<resultMap type="CardUser" id="CardUserResult">
+		<result property="id" column="id" />
+		<result property="applyName" column="apply_name" />
+		<result property="applyNumber" column="apply_number" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="gender" column="gender" />
+		<result property="specialCardInfo" column="special_card_info" />
+		<result property="applyTime" column="apply_time" />
+		<result property="applyStatus" column="apply_status" />
+		<result property="checkUser" column="check_user" />
+		<result property="applyType" column="apply_type" />
+		<result property="orderCode" column="order_code" />
+		<result property="payAmount" column="pay_amount" />
+		<result property="payStatus" column="pay_status" />
+		<result property="connectTelphone" column="connect_telphone" />
+		<result property="connectMobile" column="connect_mobile" />
+		<result property="payTime" column="pay_time" />
+		<result property="payCompleteTime" column="pay_complete_time" />
+		<result property="payType" column="pay_type" />
+		<result property="mailType" column="mail_type" />
+		<result property="companyName" column="company_name" />
+		<result property="mailNo" column="mail_no" />
+		<result property="rejectInfo" column="reject_info" />
+		<result property="updateDate" column="update_date" />
+		<result property="checkDate" column="check_date" />
+		<result property="imageOne" column="image_one" />
+		<result property="imageTwo" column="image_two" />
+		<result property="imageThree" column="image_three" />
+		<result property="imageFour" column="image_four" />
+		<result property="imageFive" column="image_five" />
+		<result property="chargeInfo" column="charge_info" />
+		<result property="chargeAmount" column="charge_amount" />
+		<result property="cardNum" column="card_num" />
+		<result property="cardFee" column="card_fee" />
+		<result property="relationToApply" column="relation_to_apply" />
+		<result property="agentName" column="agent_name" />
+		<result property="agentMobile" column="agent_mobile" />
+		<result property="agentAddress" column="agent_address" />
+		<result property="frontUserId" column="front_user_id" />
+		<result property="addressId" column="address_id" />
+		<result property="stationId" column="station_id" />
+		<result property="schoolInfo" column="school_info" />
+		<result property="exportTimes" column="export_times" />
+		<result property="remark" column="remark" />
+		<result property="backupOne" column="backup_one" />
+		<result property="backupTwo" column="backup_two" />
+		<result property="backupThree" column="backup_three" />
+	</resultMap>
+	<resultMap type="Address" id="AddressResult">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="mobile" column="mobile" />
+		<result property="recName" column="rec_name" />
+		<result property="recAddress" column="rec_address" />
+		<result property="proId" column="pro_id" />
+		<result property="cityId" column="city_id" />
+		<result property="countyId" column="county_id" />
+		<result property="postcode" column="postcode" />
+		<result property="isDefault" column="is_default" />
+		<result property="delFlag" column="del_flag" />
+		<result property="remarks" column="remarks" />
+	</resultMap>
+
+
+	<resultMap type="SpecialCardInfo" id="SpecialCardInfoResult">
+		<result property="id" column="id" />
+		<result property="cardTypeName" column="card_type_name" />
+		<result property="proId" column="pro_id" />
+		<result property="cityId" column="city_id" />
+		<result property="countyId" column="county_id" />
+		<result property="cardType" column="card_type" />
+		<result property="layoutId" column="layout_id" />
+		<result property="delFlag" column="del_flag" />
+		<result property="status" column="status" />
+		<result property="createDate" column="create_date" />
+		<result property="updateDate" column="update_date" />
+		<result property="createUser" column="create_user" />
+		<result property="updateUser" column="update_user" />
+		<result property="remarks" column="remarks" />
+	</resultMap>
+
+	<resultMap type="StationInfo" id="StationInfoResult">
+		<result property="id" column="id" />
+		<result property="cityId" column="city_id" />
+		<result property="countyId" column="county_id" />
+		<result property="stationName" column="station_name" />
+		<result property="stationAddress" column="station_address" />
+		<result property="stationMobile" column="station_mobile" />
+		<result property="stationConnectPerson" column="station_connect_person" />
+		<result property="stationNetTime" column="station_net_time" />
+		<result property="stationServerInfo" column="station_server_info" />
+		<result property="createDate" column="create_date" />
+		<result property="updateDate" column="update_date" />
+		<result property="stationStatus" column="station_status" />
+		<result property="delFlag" column="del_flag" />
+		<result property="remarks" column="remarks" />
+	</resultMap>
+
+
+	<sql id="selectCardUserVo">
+		select id, apply_name, apply_number, id_card_num, gender, special_card_info,
+		apply_time, apply_status, check_user, apply_type, order_code,
+		pay_amount, pay_status, connect_telphone, connect_mobile, pay_time,
+		pay_complete_time, pay_type, mail_type, company_name, mail_no,
+		reject_info, update_date, check_date, image_one, image_two,
+		image_three, image_four, image_five, charge_info, charge_amount,
+		card_num, card_fee, relation_to_apply, agent_name, agent_mobile,
+		agent_address, front_user_id, address_id, station_id, school_info,
+		export_times, remark, backup_one, backup_two, backup_three from
+		col_card_user
+	</sql>
+	<select id="selectCardUserInfo" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+		SELECT
+		card.*,ad.id,ad.user_id,ad.rec_name,ad.rec_address,ad.mobile,info.*,st.*
+		FROM
+		col_card_user AS card
+		LEFT JOIN
+		col_address AS ad ON card.address_id=ad.id
+		LEFT JOIN
+		col_special_card_info AS info ON card.special_card_info =
+		info.id
+		LEFT
+		JOIN col_station_info as st ON card.station_id=st.id
+		where 1=1
+		<if test="front_user_id != null "> and card.front_user_id = #{front_user_id}</if>
+	</select>
+	<select id="selectCardUserList" parameterType="CardUser"
+		resultMap="CardUserResult">
+		<include refid="selectCardUserVo" />
+		<where>
+			<if test="id != null "> and id = #{id}</if>
+			<if test="applyName != null  and applyName != '' "> and apply_name like '%${applyName}%'</if>
+			<if test="applyNumber != null  and applyNumber != '' "> and apply_number like '%${applyNumber}%'</if>
+			<if test="idCardNum != null  and idCardNum != '' "> and id_card_num like '%${idCardNum}%'</if>
+			<if test="gender != null  and gender != '' "> and gender = #{gender}</if>
+			<if test="specialCardInfo != null "> and special_card_info = #{specialCardInfo}</if>
+			<if test="applyTime != null "> and apply_time = #{applyTime}</if>
+			<if test="applyStatus != null  and applyStatus != '' "> and apply_status = #{applyStatus}</if>
+			<if test="checkUser != null and checkUser!=''"> and check_user = #{checkUser}</if>
+			<if test="applyType != null  and applyType != '' "> and apply_type = #{applyType}</if>
+			<if test="orderCode != null  and orderCode != '' "> and order_code = #{orderCode}</if>
+			<if test="payAmount != null "> and pay_amount = #{payAmount}</if>
+			<if test="payStatus != null  and payStatus != '' "> and pay_status = #{payStatus}</if>
+			<if test="connectTelphone != null  and connectTelphone != '' "> and connect_telphone = #{connectTelphone}</if>
+			<if test="connectMobile != null  and connectMobile != '' "> and connect_mobile = #{connectMobile}</if>
+			<if test="payTime != null "> and pay_time = #{payTime}</if>
+			<if test="payCompleteTime != null "> and pay_complete_time = #{payCompleteTime}</if>
+			<if test="payType != null  and payType != '' "> and pay_type = #{payType}</if>
+			<if test="mailType != null  and mailType != '' "> and mail_type = #{mailType}</if>
+			<if test="companyName != null  and companyName != '' "> and company_name = #{companyName}</if>
+			<if test="mailNo != null  and mailNo != '' "> and mail_no like '%${mailNo}%'</if>
+			<if test="rejectInfo != null  and rejectInfo != '' "> and reject_info = #{rejectInfo}</if>
+			<if test="updateDate != null "> and update_date = #{updateDate}</if>
+			<if test="checkDate != null "> and check_date = #{checkDate}</if>
+			<if test="imageOne != null  and imageOne != '' "> and image_one = #{imageOne}</if>
+			<if test="imageTwo != null  and imageTwo != '' "> and image_two = #{imageTwo}</if>
+			<if test="imageThree != null  and imageThree != '' "> and image_three = #{imageThree}</if>
+			<if test="imageFour != null  and imageFour != '' "> and image_four = #{imageFour}</if>
+			<if test="imageFive != null  and imageFive != '' "> and image_five = #{imageFive}</if>
+			<if test="chargeInfo != null  and chargeInfo != '' "> and charge_info = #{chargeInfo}</if>
+			<if test="chargeAmount != null "> and charge_amount = #{chargeAmount}</if>
+			<if test="cardNum != null  and cardNum != '' "> and card_num = #{cardNum}</if>
+			<if test="cardFee != null "> and card_fee = #{cardFee}</if>
+			<if test="relationToApply != null  and relationToApply != '' "> and relation_to_apply = #{relationToApply}</if>
+			<if test="agentName != null  and agentName != '' "> and agent_name = #{agentName}</if>
+			<if test="agentMobile != null  and agentMobile != '' "> and agent_mobile = #{agentMobile}</if>
+			<if test="agentAddress != null  and agentAddress != '' "> and agent_address = #{agentAddress}</if>
+			<if test="frontUserId != null "> and front_user_id = #{frontUserId}</if>
+			<if test="addressId != null "> and address_id = #{addressId}</if>
+			<if test="stationId != null "> and station_id = #{stationId}</if>
+			<if test="schoolInfo != null "> and school_info = #{schoolInfo}</if>
+			<if test="exportTimes != null "> and export_times = #{exportTimes}</if>
+			<if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+			<if test="backupOne != null  and backupOne != '' "> and backup_one = #{backupOne}</if>
+			<if test="backupTwo != null  and backupTwo != '' "> and backup_two = #{backupTwo}</if>
+			<if test="backupThree != null  and backupThree != '' "> and backup_three = #{backupThree}</if>
+		</where>
+	</select>
+
+	<select id="selectCardUserById" parameterType="Integer"
+		resultMap="CardUserResult">
+		<include refid="selectCardUserVo" />
+		where id = #{id}
+	</select>
+
+	<insert id="insertCardUser" parameterType="CardUser"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into col_card_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="applyName != null  and applyName != ''  ">apply_name,</if>
+			<if test="applyNumber != null  and applyNumber != ''  ">apply_number,</if>
+			<if test="idCardNum != null  and idCardNum != ''  ">id_card_num,</if>
+			<if test="gender != null  and gender != ''  ">gender,</if>
+			<if test="specialCardInfo != null  ">special_card_info,</if>
+			<if test="applyTime != null  ">apply_time,</if>
+			<if test="applyStatus != null  and applyStatus != ''  ">apply_status,</if>
+			<if test="checkUser != null  ">check_user,</if>
+			<if test="applyType != null  and applyType != ''  ">apply_type,</if>
+			<if test="orderCode != null  and orderCode != ''  ">order_code,</if>
+			<if test="payAmount != null  ">pay_amount,</if>
+			<if test="payStatus != null  and payStatus != ''  ">pay_status,</if>
+			<if test="connectTelphone != null  and connectTelphone != ''  ">connect_telphone,</if>
+			<if test="connectMobile != null  and connectMobile != ''  ">connect_mobile,</if>
+			<if test="payTime != null  ">pay_time,</if>
+			<if test="payCompleteTime != null  ">pay_complete_time,</if>
+			<if test="payType != null  and payType != ''  ">pay_type,</if>
+			<if test="mailType != null  and mailType != ''  ">mail_type,</if>
+			<if test="companyName != null  and companyName != ''  ">company_name,</if>
+			<if test="mailNo != null  and mailNo != ''  ">mail_no,</if>
+			<if test="rejectInfo != null  and rejectInfo != ''  ">reject_info,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="checkDate != null  ">check_date,</if>
+			<if test="imageOne != null  and imageOne != ''  ">image_one,</if>
+			<if test="imageTwo != null  and imageTwo != ''  ">image_two,</if>
+			<if test="imageThree != null  and imageThree != ''  ">image_three,</if>
+			<if test="imageFour != null  and imageFour != ''  ">image_four,</if>
+			<if test="imageFive != null  and imageFive != ''  ">image_five,</if>
+			<if test="chargeInfo != null  and chargeInfo != ''  ">charge_info,</if>
+			<if test="chargeAmount != null  ">charge_amount,</if>
+			<if test="cardNum != null  and cardNum != ''  ">card_num,</if>
+			<if test="cardFee != null  ">card_fee,</if>
+			<if test="relationToApply != null  and relationToApply != ''  ">relation_to_apply,</if>
+			<if test="agentName != null  and agentName != ''  ">agent_name,</if>
+			<if test="agentMobile != null  and agentMobile != ''  ">agent_mobile,</if>
+			<if test="agentAddress != null  and agentAddress != ''  ">agent_address,</if>
+			<if test="frontUserId != null  ">front_user_id,</if>
+			<if test="addressId != null  ">address_id,</if>
+			<if test="stationId != null  ">station_id,</if>
+			<if test="schoolInfo != null  ">school_info,</if>
+			<if test="exportTimes != null  ">export_times,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="backupOne != null  and backupOne != ''  ">backup_one,</if>
+			<if test="backupTwo != null  and backupTwo != ''  ">backup_two,</if>
+			<if test="backupThree != null  and backupThree != ''  ">backup_three,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="applyName != null  and applyName != ''  ">#{applyName},</if>
+			<if test="applyNumber != null  and applyNumber != ''  ">#{applyNumber},</if>
+			<if test="idCardNum != null  and idCardNum != ''  ">#{idCardNum},</if>
+			<if test="gender != null  and gender != ''  ">#{gender},</if>
+			<if test="specialCardInfo != null  ">#{specialCardInfo},</if>
+			<if test="applyTime != null  ">#{applyTime},</if>
+			<if test="applyStatus != null  and applyStatus != ''  ">#{applyStatus},</if>
+			<if test="checkUser != null  ">#{checkUser},</if>
+			<if test="applyType != null  and applyType != ''  ">#{applyType},</if>
+			<if test="orderCode != null  and orderCode != ''  ">#{orderCode},</if>
+			<if test="payAmount != null  ">#{payAmount},</if>
+			<if test="payStatus != null  and payStatus != ''  ">#{payStatus},</if>
+			<if test="connectTelphone != null  and connectTelphone != ''  ">#{connectTelphone},</if>
+			<if test="connectMobile != null  and connectMobile != ''  ">#{connectMobile},</if>
+			<if test="payTime != null  ">#{payTime},</if>
+			<if test="payCompleteTime != null  ">#{payCompleteTime},</if>
+			<if test="payType != null  and payType != ''  ">#{payType},</if>
+			<if test="mailType != null  and mailType != ''  ">#{mailType},</if>
+			<if test="companyName != null  and companyName != ''  ">#{companyName},</if>
+			<if test="mailNo != null  and mailNo != ''  ">#{mailNo},</if>
+			<if test="rejectInfo != null  and rejectInfo != ''  ">#{rejectInfo},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="checkDate != null  ">#{checkDate},</if>
+			<if test="imageOne != null  and imageOne != ''  ">#{imageOne},</if>
+			<if test="imageTwo != null  and imageTwo != ''  ">#{imageTwo},</if>
+			<if test="imageThree != null  and imageThree != ''  ">#{imageThree},</if>
+			<if test="imageFour != null  and imageFour != ''  ">#{imageFour},</if>
+			<if test="imageFive != null  and imageFive != ''  ">#{imageFive},</if>
+			<if test="chargeInfo != null  and chargeInfo != ''  ">#{chargeInfo},</if>
+			<if test="chargeAmount != null  ">#{chargeAmount},</if>
+			<if test="cardNum != null  and cardNum != ''  ">#{cardNum},</if>
+			<if test="cardFee != null  ">#{cardFee},</if>
+			<if test="relationToApply != null  and relationToApply != ''  ">#{relationToApply},</if>
+			<if test="agentName != null  and agentName != ''  ">#{agentName},</if>
+			<if test="agentMobile != null  and agentMobile != ''  ">#{agentMobile},</if>
+			<if test="agentAddress != null  and agentAddress != ''  ">#{agentAddress},</if>
+			<if test="frontUserId != null  ">#{frontUserId},</if>
+			<if test="addressId != null  ">#{addressId},</if>
+			<if test="stationId != null  ">#{stationId},</if>
+			<if test="schoolInfo != null  ">#{schoolInfo},</if>
+			<if test="exportTimes != null  ">#{exportTimes},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="backupOne != null  and backupOne != ''  ">#{backupOne},</if>
+			<if test="backupTwo != null  and backupTwo != ''  ">#{backupTwo},</if>
+			<if test="backupThree != null  and backupThree != ''  ">#{backupThree},</if>
+		</trim>
+	</insert>
+	
+		<update id="updateOrderCode" parameterType="CardUser">
+		update col_card_user
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="applyName != null  and applyName != ''  ">apply_name = #{applyName},</if>
+			<if test="applyNumber != null  and applyNumber != ''  ">apply_number = #{applyNumber},</if>
+			<if test="idCardNum != null  and idCardNum != ''  ">id_card_num = #{idCardNum},</if>
+			<if test="gender != null  and gender != ''  ">gender = #{gender},</if>
+			<if test="specialCardInfo != null  ">special_card_info = #{specialCardInfo},</if>
+			<if test="applyTime != null  ">apply_time = #{applyTime},</if>
+			<if test="applyStatus != null  and applyStatus != ''  ">apply_status = #{applyStatus},</if>
+			<if test="checkUser != null and  checkUser!=''">check_user = #{checkUser},</if>
+			<if test="applyType != null  and applyType != ''  ">apply_type = #{applyType},</if>
+			<if test="payAmount != null  ">pay_amount = #{payAmount},</if>
+			<if test="payStatus != null  and payStatus != ''  ">pay_status = #{payStatus},</if>
+			<if test="connectTelphone != null  and connectTelphone != ''  ">connect_telphone = #{connectTelphone},</if>
+			<if test="connectMobile != null  and connectMobile != ''  ">connect_mobile = #{connectMobile},</if>
+			<if test="payTime != null  ">pay_time = #{payTime},</if>
+			<if test="payCompleteTime != null  ">pay_complete_time = #{payCompleteTime},</if>
+			<if test="payType != null  and payType != ''  ">pay_type = #{payType},</if>
+			<if test="mailType != null  and mailType != ''  ">mail_type = #{mailType},</if>
+			<if test="companyName != null  and companyName != ''  ">company_name = #{companyName},</if>
+			<if test="mailNo != null  and mailNo != ''  ">mail_no = #{mailNo},</if>
+			<if test="rejectInfo != null  and rejectInfo != ''  ">reject_info = #{rejectInfo},</if>
+			<if test="updateDate != null  ">update_date = #{updateDate},</if>
+			<if test="checkDate != null  ">check_date = #{checkDate},</if>
+			<if test="imageOne != null  and imageOne != ''  ">image_one = #{imageOne},</if>
+			<if test="imageTwo != null  and imageTwo != ''  ">image_two = #{imageTwo},</if>
+			<if test="imageThree != null  and imageThree != ''  ">image_three = #{imageThree},</if>
+			<if test="imageFour != null  and imageFour != ''  ">image_four = #{imageFour},</if>
+			<if test="imageFive != null  and imageFive != ''  ">image_five = #{imageFive},</if>
+			<if test="chargeInfo != null  and chargeInfo != ''  ">charge_info = #{chargeInfo},</if>
+			<if test="chargeAmount != null  ">charge_amount = #{chargeAmount},</if>
+			<if test="cardNum != null  and cardNum != ''  ">card_num = #{cardNum},</if>
+			<if test="cardFee != null  ">card_fee = #{cardFee},</if>
+			<if test="relationToApply != null  and relationToApply != ''  ">relation_to_apply = #{relationToApply},</if>
+			<if test="agentName != null  and agentName != ''  ">agent_name = #{agentName},</if>
+			<if test="agentMobile != null  and agentMobile != ''  ">agent_mobile = #{agentMobile},</if>
+			<if test="agentAddress != null  and agentAddress != ''  ">agent_address = #{agentAddress},</if>
+			<if test="frontUserId != null  ">front_user_id = #{frontUserId},</if>
+			<if test="addressId != null  ">address_id = #{addressId},</if>
+			<if test="stationId != null  ">station_id = #{stationId},</if>
+			<if test="schoolInfo != null  ">school_info = #{schoolInfo},</if>
+			<if test="exportTimes != null  ">export_times = #{exportTimes},</if>
+			<if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+			<if test="backupOne != null  and backupOne != ''  ">backup_one = #{backupOne},</if>
+			<if test="backupTwo != null  and backupTwo != ''  ">backup_two = #{backupTwo},</if>
+			<if test="backupThree != null  and backupThree != ''  ">backup_three = #{backupThree},</if>
+		</trim>
+		order_code = #{orderCode}		
+	</update>
+
+	<update id="updateCardUser" parameterType="CardUser">
+		update col_card_user
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="applyName != null  and applyName != ''  ">apply_name = #{applyName},</if>
+			<if test="applyNumber != null  and applyNumber != ''  ">apply_number = #{applyNumber},</if>
+			<if test="idCardNum != null  and idCardNum != ''  ">id_card_num = #{idCardNum},</if>
+			<if test="gender != null  and gender != ''  ">gender = #{gender},</if>
+			<if test="specialCardInfo != null  ">special_card_info = #{specialCardInfo},</if>
+			<if test="applyTime != null  ">apply_time = #{applyTime},</if>
+			<if test="applyStatus != null  and applyStatus != ''  ">apply_status = #{applyStatus},</if>
+			<if test="checkUser != null and  checkUser!=''">check_user = #{checkUser},</if>
+			<if test="applyType != null  and applyType != ''  ">apply_type = #{applyType},</if>
+			<if test="orderCode != null  and orderCode != ''  ">order_code = #{orderCode},</if>
+			<if test="payAmount != null  ">pay_amount = #{payAmount},</if>
+			<if test="payStatus != null  and payStatus != ''  ">pay_status = #{payStatus},</if>
+			<if test="connectTelphone != null  and connectTelphone != ''  ">connect_telphone = #{connectTelphone},</if>
+			<if test="connectMobile != null  and connectMobile != ''  ">connect_mobile = #{connectMobile},</if>
+			<if test="payTime != null  ">pay_time = #{payTime},</if>
+			<if test="payCompleteTime != null  ">pay_complete_time = #{payCompleteTime},</if>
+			<if test="payType != null  and payType != ''  ">pay_type = #{payType},</if>
+			<if test="mailType != null  and mailType != ''  ">mail_type = #{mailType},</if>
+			<if test="companyName != null  and companyName != ''  ">company_name = #{companyName},</if>
+			<if test="mailNo != null  and mailNo != ''  ">mail_no = #{mailNo},</if>
+			<if test="rejectInfo != null  and rejectInfo != ''  ">reject_info = #{rejectInfo},</if>
+			<if test="updateDate != null  ">update_date = #{updateDate},</if>
+			<if test="checkDate != null  ">check_date = #{checkDate},</if>
+			<if test="imageOne != null  and imageOne != ''  ">image_one = #{imageOne},</if>
+			<if test="imageTwo != null  and imageTwo != ''  ">image_two = #{imageTwo},</if>
+			<if test="imageThree != null  and imageThree != ''  ">image_three = #{imageThree},</if>
+			<if test="imageFour != null  and imageFour != ''  ">image_four = #{imageFour},</if>
+			<if test="imageFive != null  and imageFive != ''  ">image_five = #{imageFive},</if>
+			<if test="chargeInfo != null  and chargeInfo != ''  ">charge_info = #{chargeInfo},</if>
+			<if test="chargeAmount != null  ">charge_amount = #{chargeAmount},</if>
+			<if test="cardNum != null  and cardNum != ''  ">card_num = #{cardNum},</if>
+			<if test="cardFee != null  ">card_fee = #{cardFee},</if>
+			<if test="relationToApply != null  and relationToApply != ''  ">relation_to_apply = #{relationToApply},</if>
+			<if test="agentName != null  and agentName != ''  ">agent_name = #{agentName},</if>
+			<if test="agentMobile != null  and agentMobile != ''  ">agent_mobile = #{agentMobile},</if>
+			<if test="agentAddress != null  and agentAddress != ''  ">agent_address = #{agentAddress},</if>
+			<if test="frontUserId != null  ">front_user_id = #{frontUserId},</if>
+			<if test="addressId != null  ">address_id = #{addressId},</if>
+			<if test="stationId != null  ">station_id = #{stationId},</if>
+			<if test="schoolInfo != null  ">school_info = #{schoolInfo},</if>
+			<if test="exportTimes != null  ">export_times = #{exportTimes},</if>
+			<if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+			<if test="backupOne != null  and backupOne != ''  ">backup_one = #{backupOne},</if>
+			<if test="backupTwo != null  and backupTwo != ''  ">backup_two = #{backupTwo},</if>
+			<if test="backupThree != null  and backupThree != ''  ">backup_three = #{backupThree},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteCardUserById" parameterType="Integer">
+		delete from col_card_user where id = #{id}
+	</delete>
+
+	<delete id="deleteCardUserByIds" parameterType="String">
+		delete from col_card_user where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

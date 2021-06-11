@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.model.mapper.YfgWxTokenMapper">
+    
+    <resultMap type="YfgWxToken" id="YfgWxTokenResult">
+        <result property="id"    column="id"    />
+        <result property="accessToken"    column="access_token"    />
+        <result property="jsapiTicket"    column="jsapi_ticket"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="type"    column="type"    />
+        <result property="appId"    column="app_id"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+	
+	<sql id="selectYfgWxTokenVo">
+        select id, access_token, jsapi_ticket, create_time, update_time, type, app_id, remarks from yfg_wx_token
+    </sql>
+	
+    <select id="selectYfgWxTokenList" parameterType="YfgWxToken" resultMap="YfgWxTokenResult">
+        <include refid="selectYfgWxTokenVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="accessToken != null  and accessToken != '' "> and access_token = #{accessToken}</if>
+             <if test="jsapiTicket != null  and jsapiTicket != '' "> and jsapi_ticket = #{jsapiTicket}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="type != null  and type != '' "> and type = #{type}</if>
+             <if test="appId != null  and appId != '' "> and app_id = #{appId}</if>
+             <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
+         </where>
+    </select>
+    
+    <select id="selectYfgWxTokenById" parameterType="Integer" resultMap="YfgWxTokenResult">
+        <include refid="selectYfgWxTokenVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertYfgWxToken" parameterType="YfgWxToken" useGeneratedKeys="true" keyProperty="id">
+        insert into yfg_wx_token
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="accessToken != null  and accessToken != ''  ">access_token,</if>
+			<if test="jsapiTicket != null  and jsapiTicket != ''  ">jsapi_ticket,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="type != null  and type != ''  ">type,</if>
+			<if test="appId != null  and appId != ''  ">app_id,</if>
+			<if test="remarks != null  and remarks != ''  ">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="accessToken != null  and accessToken != ''  ">#{accessToken},</if>
+			<if test="jsapiTicket != null  and jsapiTicket != ''  ">#{jsapiTicket},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="type != null  and type != ''  ">#{type},</if>
+			<if test="appId != null  and appId != ''  ">#{appId},</if>
+			<if test="remarks != null  and remarks != ''  ">#{remarks},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateYfgWxToken" parameterType="YfgWxToken">
+        update yfg_wx_token
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="accessToken != null  and accessToken != ''  ">access_token = #{accessToken},</if>
+            <if test="jsapiTicket != null  and jsapiTicket != ''  ">jsapi_ticket = #{jsapiTicket},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="type != null  and type != ''  ">type = #{type},</if>
+            <if test="appId != null  and appId != ''  ">app_id = #{appId},</if>
+            <if test="remarks != null  and remarks != ''  ">remarks = #{remarks},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteYfgWxTokenById" parameterType="Integer">
+        delete from yfg_wx_token where id = #{id}
+    </delete>
+	
+    <delete id="deleteYfgWxTokenByIds" parameterType="String">
+        delete from yfg_wx_token where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

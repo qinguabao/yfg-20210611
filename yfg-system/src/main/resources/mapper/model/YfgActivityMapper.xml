@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.model.mapper.YfgActivityMapper">
+    
+    <resultMap type="YfgActivity" id="YfgActivityResult">
+        <result property="id"    column="id"    />
+        <result property="activityName"    column="activity_name"    />
+        <result property="activityContent"    column="activity_content"    />
+        <result property="oriPrice"    column="ori_price"    />
+        <result property="activityPrice"    column="activity_price"    />
+        <result property="beginDate"    column="begin_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="activityNum"    column="activity_num"    />
+        <result property="activityGoodsImg"    column="activity_goods_img"    />
+        <result property="activityImgOne"    column="activity_img_one"    />
+        <result property="activityImgTwo"    column="activity_img_two"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="createUser"    column="create_user"    />
+        <result property="updateUser"    column="update_user"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+	
+	<sql id="selectYfgActivityVo">
+        select id, activity_name, activity_content, ori_price, activity_price, begin_date, end_date, activity_num, activity_goods_img, activity_img_one, activity_img_two, create_date, update_date, create_user, update_user, del_flag, remarks from yfg_activity
+    </sql>
+	
+    <select id="selectYfgActivityList" parameterType="YfgActivity" resultMap="YfgActivityResult">
+        <include refid="selectYfgActivityVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="activityName != null  and activityName != '' "> and activity_name = #{activityName}</if>
+             <if test="activityContent != null  and activityContent != '' "> and activity_content = #{activityContent}</if>
+             <if test="oriPrice != null "> and ori_price = #{oriPrice}</if>
+             <if test="activityPrice != null "> and activity_price = #{activityPrice}</if>
+             <if test="beginDate != null "> and begin_date = #{beginDate}</if>
+             <if test="endDate != null "> and end_date = #{endDate}</if>
+             <if test="activityNum != null "> and activity_num = #{activityNum}</if>
+             <if test="activityGoodsImg != null  and activityGoodsImg != '' "> and activity_goods_img = #{activityGoodsImg}</if>
+             <if test="activityImgOne != null  and activityImgOne != '' "> and activity_img_one = #{activityImgOne}</if>
+             <if test="activityImgTwo != null  and activityImgTwo != '' "> and activity_img_two = #{activityImgTwo}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="createUser != null "> and create_user = #{createUser}</if>
+             <if test="updateUser != null "> and update_user = #{updateUser}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
+         </where>
+    </select>
+    
+    <select id="selectYfgActivityById" parameterType="Integer" resultMap="YfgActivityResult">
+        <include refid="selectYfgActivityVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertYfgActivity" parameterType="YfgActivity" useGeneratedKeys="true" keyProperty="id">
+        insert into yfg_activity
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="activityName != null  and activityName != ''  ">activity_name,</if>
+			<if test="activityContent != null  and activityContent != ''  ">activity_content,</if>
+			<if test="oriPrice != null  ">ori_price,</if>
+			<if test="activityPrice != null  ">activity_price,</if>
+			<if test="beginDate != null  ">begin_date,</if>
+			<if test="endDate != null  ">end_date,</if>
+			<if test="activityNum != null  ">activity_num,</if>
+			<if test="activityGoodsImg != null  and activityGoodsImg != ''  ">activity_goods_img,</if>
+			<if test="activityImgOne != null  and activityImgOne != ''  ">activity_img_one,</if>
+			<if test="activityImgTwo != null  and activityImgTwo != ''  ">activity_img_two,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="createUser != null  ">create_user,</if>
+			<if test="updateUser != null  ">update_user,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="remarks != null  and remarks != ''  ">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="activityName != null  and activityName != ''  ">#{activityName},</if>
+			<if test="activityContent != null  and activityContent != ''  ">#{activityContent},</if>
+			<if test="oriPrice != null  ">#{oriPrice},</if>
+			<if test="activityPrice != null  ">#{activityPrice},</if>
+			<if test="beginDate != null  ">#{beginDate},</if>
+			<if test="endDate != null  ">#{endDate},</if>
+			<if test="activityNum != null  ">#{activityNum},</if>
+			<if test="activityGoodsImg != null  and activityGoodsImg != ''  ">#{activityGoodsImg},</if>
+			<if test="activityImgOne != null  and activityImgOne != ''  ">#{activityImgOne},</if>
+			<if test="activityImgTwo != null  and activityImgTwo != ''  ">#{activityImgTwo},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="createUser != null  ">#{createUser},</if>
+			<if test="updateUser != null  ">#{updateUser},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="remarks != null  and remarks != ''  ">#{remarks},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateYfgActivity" parameterType="YfgActivity">
+        update yfg_activity
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="activityName != null  and activityName != ''  ">activity_name = #{activityName},</if>
+            <if test="activityContent != null  and activityContent != ''  ">activity_content = #{activityContent},</if>
+            <if test="oriPrice != null  ">ori_price = #{oriPrice},</if>
+            <if test="activityPrice != null  ">activity_price = #{activityPrice},</if>
+            <if test="beginDate != null  ">begin_date = #{beginDate},</if>
+            <if test="endDate != null  ">end_date = #{endDate},</if>
+            <if test="activityNum != null  ">activity_num = #{activityNum},</if>
+            <if test="activityGoodsImg != null  and activityGoodsImg != ''  ">activity_goods_img = #{activityGoodsImg},</if>
+            <if test="activityImgOne != null  and activityImgOne != ''  ">activity_img_one = #{activityImgOne},</if>
+            <if test="activityImgTwo != null  and activityImgTwo != ''  ">activity_img_two = #{activityImgTwo},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="createUser != null  ">create_user = #{createUser},</if>
+            <if test="updateUser != null  ">update_user = #{updateUser},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="remarks != null  and remarks != ''  ">remarks = #{remarks},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteYfgActivityById" parameterType="Integer">
+        delete from yfg_activity where id = #{id}
+    </delete>
+	
+    <delete id="deleteYfgActivityByIds" parameterType="String">
+        delete from yfg_activity where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

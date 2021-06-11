@@ -1,0 +1,263 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-cardUser-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">申请人姓名：</label>
+				<div class="col-sm-8">
+					<input id="applyName" name="applyName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">学生证号码：</label>
+				<div class="col-sm-8">
+					<input id="applyNumber" name="applyNumber" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">身份证号码：</label>
+				<div class="col-sm-8">
+					<input id="idCardNum" name="idCardNum" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">性别：</label>
+				<div class="col-sm-8">
+					<input id="gender" name="gender" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">优惠卡类型：</label>
+				<div class="col-sm-8">
+					<input id="specialCardInfo" name="specialCardInfo" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">申请时间：</label>
+				<div class="col-sm-8">
+					<input id="applyTime" name="applyTime" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">申请状态：</label>
+				<div class="col-sm-8">
+					<input id="applyStatus" name="applyStatus" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">申请方式：</label>
+				<div class="col-sm-8">
+					<input id="applyType" name="applyType" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">支付订单号：</label>
+				<div class="col-sm-8">
+					<input id="orderCode" name="orderCode" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">支付金额：</label>
+				<div class="col-sm-8">
+					<input id="payAmount" name="payAmount" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">支付状态：</label>
+				<div class="col-sm-8">
+					<input id="payStatus" name="payStatus" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">支付申请时间：</label>
+				<div class="col-sm-8">
+					<input id="payTime" name="payTime" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">支付完成时间：</label>
+				<div class="col-sm-8">
+					<input id="payCompleteTime" name="payCompleteTime" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">支付方式：</label>
+				<div class="col-sm-8">
+					<input id="payType" name="payType" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">邮寄自取：</label>
+				<div class="col-sm-8">
+					<input id="mailType" name="mailType" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">快递公司：</label>
+				<div class="col-sm-8">
+					<input id="companyName" name="companyName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">快递单号：</label>
+				<div class="col-sm-8">
+					<input id="mailNo" name="mailNo" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">驳回原因：</label>
+				<div class="col-sm-8">
+					<input id="rejectInfo" name="rejectInfo" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">更新时间：</label>
+				<div class="col-sm-8">
+					<input id="updateDate" name="updateDate" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">审核时间：</label>
+				<div class="col-sm-8">
+					<input id="checkDate" name="checkDate" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">身份证、户口本：</label>
+				<div class="col-sm-8">
+					<input id="imageOne" name="imageOne" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">证件：</label>
+				<div class="col-sm-8">
+					<input id="imageTwo" name="imageTwo" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">制卡图片：</label>
+				<div class="col-sm-8">
+					<input id="imageThree" name="imageThree" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备用：</label>
+				<div class="col-sm-8">
+					<input id="imageFour" name="imageFour" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">制卡图片备用：</label>
+				<div class="col-sm-8">
+					<input id="imageFive" name="imageFive" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否充值：</label>
+				<div class="col-sm-8">
+					<input id="chargeInfo" name="chargeInfo" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">充值金额：</label>
+				<div class="col-sm-8">
+					<input id="chargeAmount" name="chargeAmount" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">卡号：</label>
+				<div class="col-sm-8">
+					<input id="cardNum" name="cardNum" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">卡费用：</label>
+				<div class="col-sm-8">
+					<input id="cardFee" name="cardFee" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">与申请人关系：</label>
+				<div class="col-sm-8">
+					<input id="relationToApply" name="relationToApply" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">信息填写人：</label>
+				<div class="col-sm-8">
+					<input id="frontUserId" name="frontUserId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">收件地址id：</label>
+				<div class="col-sm-8">
+					<input id="addressId" name="addressId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">自取网点：</label>
+				<div class="col-sm-8">
+					<input id="stationId" name="stationId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">学校信息：</label>
+				<div class="col-sm-8">
+					<input id="schoolInfo" name="schoolInfo" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">导出次数：</label>
+				<div class="col-sm-8">
+					<input id="exportTimes" name="exportTimes" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备用字段1：</label>
+				<div class="col-sm-8">
+					<input id="backupOne" name="backupOne" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备用字段2：</label>
+				<div class="col-sm-8">
+					<input id="backupTwo" name="backupTwo" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备用字段3：</label>
+				<div class="col-sm-8">
+					<input id="backupThree" name="backupThree" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "model/cardUser"
+		$("#form-cardUser-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-cardUser-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

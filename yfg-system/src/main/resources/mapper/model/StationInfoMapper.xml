@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.model.mapper.StationInfoMapper">
+    
+    <resultMap type="StationInfo" id="StationInfoResult">
+        <result property="id"    column="id"    />
+        <result property="proId"    column="pro_id"    />
+        <result property="cityId"    column="city_id"    />
+        <result property="countyId"    column="county_id"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="stationAddress"    column="station_address"    />
+        <result property="stationMobile"    column="station_mobile"    />
+        <result property="stationConnectPerson"    column="station_connect_person"    />
+        <result property="stationNetTime"    column="station_net_time"    />
+        <result property="stationServerInfo"    column="station_server_info"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="stationStatus"    column="station_status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+	
+	<sql id="selectStationInfoVo">
+        select id,pro_id, city_id, county_id, station_name, station_address, station_mobile, station_connect_person, station_net_time, station_server_info, create_date, update_date, station_status, del_flag, remarks from col_station_info
+    </sql>
+	
+    <select id="selectStationInfoList" parameterType="StationInfo" resultMap="StationInfoResult">
+        <include refid="selectStationInfoVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="proId != null "> and pro_id = #{proId}</if>
+             <if test="cityId != null "> and city_id = #{cityId}</if>
+             <if test="countyId != null "> and county_id = #{countyId}</if>
+             <if test="stationName != null  and stationName != '' "> and station_name like '%${stationName}%'</if>
+             <if test="stationAddress != null  and stationAddress != '' "> and station_address = #{stationAddress}</if>
+             <if test="stationMobile != null  and stationMobile != '' "> and station_mobile like '%${stationMobile}%'</if>
+             <if test="stationConnectPerson != null  and stationConnectPerson != '' "> and station_connect_person like '%${stationConnectPerson}%'</if>
+             <if test="stationNetTime != null  and stationNetTime != '' "> and station_net_time = #{stationNetTime}</if>
+             <if test="stationServerInfo != null  and stationServerInfo != '' "> and station_server_info = #{stationServerInfo}</if>
+             <if test="startTime != null and startTime!=''"> and create_date &gt; #{startTime}</if>
+             <if test="endTime != null and endTime!=''"> and create_date &lt;= #{endTime}</if>
+             <if test="startUpdateTime != null and startUpdateTime!=''"> and update_date &gt; #{startUpdateTime}</if>
+             <if test="endUpdateTime != null and endUpdateTime!=''"> and update_date &lt;= #{endUpdateTime}</if>
+             <if test="stationStatus != null  and stationStatus != '' "> and station_status = #{stationStatus}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
+         </where>
+    </select>
+    
+    <select id="selectStationInfoById" parameterType="Integer" resultMap="StationInfoResult">
+        <include refid="selectStationInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStationInfo" parameterType="StationInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into col_station_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="proId != null  ">pro_id,</if>
+			<if test="cityId != null  ">city_id,</if>
+			<if test="countyId != null  ">county_id,</if>
+			<if test="stationName != null  and stationName != ''  ">station_name,</if>
+			<if test="stationAddress != null  and stationAddress != ''  ">station_address,</if>
+			<if test="stationMobile != null  and stationMobile != ''  ">station_mobile,</if>
+			<if test="stationConnectPerson != null  and stationConnectPerson != ''  ">station_connect_person,</if>
+			<if test="stationNetTime != null  and stationNetTime != ''  ">station_net_time,</if>
+			<if test="stationServerInfo != null  and stationServerInfo != ''  ">station_server_info,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="stationStatus != null  and stationStatus != ''  ">station_status,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="remarks != null  and remarks != ''  ">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+       	 	<if test="proId != null  ">#{proId},</if>
+			<if test="cityId != null  ">#{cityId},</if>
+			<if test="countyId != null  ">#{countyId},</if>
+			<if test="stationName != null  and stationName != ''  ">#{stationName},</if>
+			<if test="stationAddress != null  and stationAddress != ''  ">#{stationAddress},</if>
+			<if test="stationMobile != null  and stationMobile != ''  ">#{stationMobile},</if>
+			<if test="stationConnectPerson != null  and stationConnectPerson != ''  ">#{stationConnectPerson},</if>
+			<if test="stationNetTime != null  and stationNetTime != ''  ">#{stationNetTime},</if>
+			<if test="stationServerInfo != null  and stationServerInfo != ''  ">#{stationServerInfo},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="stationStatus != null  and stationStatus != ''  ">#{stationStatus},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="remarks != null  and remarks != ''  ">#{remarks},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateStationInfo" parameterType="StationInfo">
+        update col_station_info
+        <trim prefix="SET" suffixOverrides=",">
+        	<if test="proId != null  ">pro_id = #{proId},</if>
+            <if test="cityId != null  ">city_id = #{cityId},</if>
+            <if test="countyId != null  ">county_id = #{countyId},</if>
+            <if test="stationName != null  and stationName != ''  ">station_name = #{stationName},</if>
+            <if test="stationAddress != null  and stationAddress != ''  ">station_address = #{stationAddress},</if>
+            <if test="stationMobile != null  and stationMobile != ''  ">station_mobile = #{stationMobile},</if>
+            <if test="stationConnectPerson != null  and stationConnectPerson != ''  ">station_connect_person = #{stationConnectPerson},</if>
+            <if test="stationNetTime != null  and stationNetTime != ''  ">station_net_time = #{stationNetTime},</if>
+            <if test="stationServerInfo != null  and stationServerInfo != ''  ">station_server_info = #{stationServerInfo},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="stationStatus != null  and stationStatus != ''  ">station_status = #{stationStatus},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="remarks != null  and remarks != ''  ">remarks = #{remarks},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteStationInfoById" parameterType="Integer">
+        delete from col_station_info where id = #{id}
+    </delete>
+	
+    <delete id="deleteStationInfoByIds" parameterType="String">
+        delete from col_station_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/yfg.iml" filepath="$PROJECT_DIR$/yfg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yfg-admin/yfg-admin.iml" filepath="$PROJECT_DIR$/yfg-admin/yfg-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yfg-common/yfg-common.iml" filepath="$PROJECT_DIR$/yfg-common/yfg-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yfg-framework/yfg-framework.iml" filepath="$PROJECT_DIR$/yfg-framework/yfg-framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yfg-generator/yfg-generator.iml" filepath="$PROJECT_DIR$/yfg-generator/yfg-generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yfg-quartz/yfg-quartz.iml" filepath="$PROJECT_DIR$/yfg-quartz/yfg-quartz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yfg-system/yfg-system.iml" filepath="$PROJECT_DIR$/yfg-system/yfg-system.iml" />
+    </modules>
+  </component>
+</project>

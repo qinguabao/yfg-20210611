@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.model.mapper.YfgVerifcodeMobileMapper">
+    
+    <resultMap type="YfgVerifcodeMobile" id="YfgVerifcodeMobileResult">
+        <result property="id"    column="id"    />
+        <result property="mobilePhone"    column="mobile_phone"    />
+        <result property="openId"    column="open_id"    />
+        <result property="vercode"    column="vercode"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="code"    column="code"    />
+    </resultMap>
+	
+	<sql id="selectYfgVerifcodeMobileVo">
+        select id, mobile_phone, open_id, vercode, create_date, code from yfg_verifcode_mobile
+    </sql>
+	
+    <select id="selectYfgVerifcodeMobileList" parameterType="YfgVerifcodeMobile" resultMap="YfgVerifcodeMobileResult">
+        <include refid="selectYfgVerifcodeMobileVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="mobilePhone != null  and mobilePhone != '' "> and mobile_phone = #{mobilePhone}</if>
+             <if test="openId != null  and openId != '' "> and open_id = #{openId}</if>
+             <if test="vercode != null  and vercode != '' "> and vercode = #{vercode}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="code != null  and code != '' "> and code = #{code}</if>
+         </where>
+    </select>
+    
+     <select id="selectYfgVerifcodeMobileListOrderByCreateDate" parameterType="YfgVerifcodeMobile" resultMap="YfgVerifcodeMobileResult">
+        <include refid="selectYfgVerifcodeMobileVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="mobilePhone != null  and mobilePhone != '' "> and mobile_phone = #{mobilePhone}</if>
+              <if test="openId != null  and openId != '' "> and open_id = #{openId}</if>
+             <if test="vercode != null  and vercode != '' "> and vercode = #{vercode}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="code != null  and code != '' "> and code = #{code}</if>
+         </where>
+         order by  create_date desc 
+    </select>
+    
+    
+    
+    <select id="selectYfgVerifcodeMobileById" parameterType="Integer" resultMap="YfgVerifcodeMobileResult">
+        <include refid="selectYfgVerifcodeMobileVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertYfgVerifcodeMobile" parameterType="YfgVerifcodeMobile" useGeneratedKeys="true" keyProperty="id">
+        insert into yfg_verifcode_mobile
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="mobilePhone != null  and mobilePhone != ''  ">mobile_phone,</if>
+			<if test="openId != null  and openId != ''  ">open_id,</if>
+			<if test="vercode != null  and vercode != ''  ">vercode,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="code != null  and code != ''  ">code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="mobilePhone != null  and mobilePhone != ''  ">#{mobilePhone},</if>
+			<if test="openId != null  and openId != ''  ">#{openId},</if>
+			<if test="vercode != null  and vercode != ''  ">#{vercode},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="code != null  and code != ''  ">#{code},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateYfgVerifcodeMobile" parameterType="YfgVerifcodeMobile">
+        update yfg_verifcode_mobile
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mobilePhone != null  and mobilePhone != ''  ">mobile_phone = #{mobilePhone},</if>
+            <if test="openId != null  and openId != ''  ">open_id = #{openId},</if>
+            <if test="vercode != null  and vercode != ''  ">vercode = #{vercode},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="code != null  and code != ''  ">code = #{code},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteYfgVerifcodeMobileById" parameterType="Integer">
+        delete from yfg_verifcode_mobile where id = #{id}
+    </delete>
+	
+    <delete id="deleteYfgVerifcodeMobileByIds" parameterType="String">
+        delete from yfg_verifcode_mobile where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

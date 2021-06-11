@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							
+							<li>
+								手机号码：<input type="text" name="mobile"/>
+							</li>
+
+							<li>
+								收件人姓名：<input type="text" name="recName"/>
+							</li>
+
+						
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				
+			
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('model:address:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('model:address:remove')}]];
+        var prefix = ctx + "model/address";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "用户快递",
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : 'id',
+					visible: false
+				},
+				{
+					field : 'userId', 
+					title : '用户',
+					sortable: true
+				},
+				{
+					field : 'mobile', 
+					title : '手机号码',
+					sortable: true
+				},
+				{
+					field : 'recName', 
+					title : '收件人姓名',
+					sortable: true
+				},
+				{
+					field : 'recAddress', 
+					title : '收件人地址',
+					sortable: true
+				},
+				{
+					field : 'proId', 
+					title : '省份',
+					sortable: true
+				},
+				{
+					field : 'cityId', 
+					title : '城市',
+					sortable: true
+				},
+				{
+					field : 'countyId', 
+					title : '区县',
+					sortable: true
+				},
+				{
+					field : 'postcode', 
+					title : '邮编',
+					sortable: true
+				},
+				{
+					field : 'isDefault', 
+					title : '是否默认地址',
+					sortable: true
+				},
+				
+			
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

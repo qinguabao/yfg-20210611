@@ -1,0 +1,336 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg wrapBody">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-cardUser-edit" th:object="${cardUser}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">申请人姓名：</label>
+				<div class="col-sm-8">
+					<input id="applyName" name="applyName" th:field="*{applyName}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">学生证号码：</label>
+				<div class="col-sm-8">
+					<input id="applyNumber" name="applyNumber" th:field="*{applyNumber}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">身份证号码：</label>
+				<div class="col-sm-8">
+					<input id="idCardNum" name="idCardNum" th:field="*{idCardNum}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">性别：</label>
+				<div class="col-sm-8">
+					<input id="gender" name="gender" th:field="*{gender}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">优惠卡类型：</label>
+				<div class="col-sm-8">
+					<input id="specialCardInfo" name="specialCardInfo" th:field="*{specialCardInfo}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">申请时间：</label>
+				<div class="col-sm-8">
+					<input id="applyTime" name="applyTime" th:field="*{applyTimeStr}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">申请状态：</label>
+				<div class="col-sm-8">
+					<input id="applyStatus" name="applyStatus" th:field="*{applyStatus}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">申请方式：</label>
+				<div class="col-sm-8">
+					<input id="applyType" name="applyType" th:field="*{applyType}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">支付订单号：</label>
+				<div class="col-sm-8">
+					<input id="orderCode" name="orderCode" th:field="*{orderCode}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">支付金额：</label>
+				<div class="col-sm-8">
+					<input id="payAmount" name="payAmount" th:field="*{payAmount}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">支付状态：</label>
+				<div class="col-sm-8">
+					<input id="payStatus" name="payStatus" th:field="*{payStatus}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">支付申请时间：</label>
+				<div class="col-sm-8">
+					<input id="payTime" name="payTime" th:field="*{payTimeStr}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">支付完成时间：</label>
+				<div class="col-sm-8">
+					<input id="payCompleteTime" name="payCompleteTime" th:field="*{payCompleteTimeStr}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">支付方式：</label>
+				<div class="col-sm-8">
+					<input id="payType" name="payType" th:field="*{payType}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">邮寄自取：</label>
+				<div class="col-sm-8">
+					<input id="mailType" name="mailType" th:field="*{mailType}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">快递公司：</label>
+				<div class="col-sm-8">
+					<input id="companyName" name="companyName" th:field="*{companyName}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">快递单号：</label>
+				<div class="col-sm-8">
+					<input id="mailNo" name="mailNo" th:field="*{mailNo}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">驳回原因：</label>
+				<div class="col-sm-8">
+					<input id="rejectInfo" name="rejectInfo" th:field="*{rejectInfo}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">更新时间：</label>
+				<div class="col-sm-8">
+					<input id="updateDate" name="updateDate" th:field="*{updateDateStr}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">审核时间：</label>
+				<div class="col-sm-8">
+					<input id="checkDate" name="checkDate" th:field="*{checkDateStr}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">身份证、户口本：</label>
+				<div class="col-sm-8">
+					<input id="imageOne" name="imageOne" th:field="*{imageOne}" class="form-control" type="text" style="display: none"> 
+					<img id="imgCard" alt="" src="">
+					
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">证件：</label>
+				<div class="col-sm-8">
+					<input id="imageTwo" name="imageTwo" th:field="*{imageTwo}" class="form-control" type="text" style="display: none">
+					<img id="imgNum" alt="" src="">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">制卡图片：</label>
+				<div class="col-sm-8">
+					<input id="imageThree" name="imageThree" th:field="*{imageThree}" class="form-control" type="text" style="display: none">
+					<img id="imgPic" alt="" src="">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备用：</label>
+				<div class="col-sm-8">
+					<input id="imageFour" name="imageFour" th:field="*{imageFour}" class="form-control" type="text" style="display: none">
+					<img id="imgFour" alt="" src="">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">制卡图片备用：</label>
+				<div class="col-sm-8">
+					<input id="imageFive" name="imageFive" th:field="*{imageFive}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否充值：</label>
+				<div class="col-sm-8">
+					<input id="chargeInfo" name="chargeInfo" th:field="*{chargeInfo}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">充值金额：</label>
+				<div class="col-sm-8">
+					<input id="chargeAmount" name="chargeAmount" th:field="*{chargeAmount}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">卡号：</label>
+				<div class="col-sm-8">
+					<input id="cardNum" name="cardNum" th:field="*{cardNum}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">卡费用：</label>
+				<div class="col-sm-8">
+					<input id="cardFee" name="cardFee" th:field="*{cardFee}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">与申请人关系：</label>
+				<div class="col-sm-8">
+					<input id="relationToApply" name="relationToApply" th:field="*{relationToApply}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">信息填写人：</label>
+				<div class="col-sm-8">
+					<input id="frontUserId" name="frontUserId" th:field="*{frontUserId}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div><!-- 
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">收件地址id：</label>
+				<div class="col-sm-8">
+					<input id="addressId" name="addressId" th:field="*{addressId}" class="form-control" type="text">
+				</div>
+			</div> -->
+			<!-- <div class="form-group">	
+				<label class="col-sm-3 control-label">自取网点：</label>
+				<div class="col-sm-8">
+					<input id="stationId" name="stationId" th:field="*{stationId}" class="form-control" type="text">
+				</div>
+			</div> -->
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">学校信息：</label>
+				<div class="col-sm-8">
+					<input id="schoolInfo" name="schoolInfo" th:field="*{schoolInfo}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "model/cardUser";
+		$("#form-cardUser-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-cardUser-edit').serialize());
+	        }
+	    }
+		$(function(){
+			$("#imgCard").attr('src',$("#imageOne").val());
+			$("#imgNum").attr('src',$("#imageTwo").val());
+			$("#imgPic").attr('src',$("#imageThree").val());
+			$("#imgFour").attr('src',$("#imageFour").val());
+			$("#applyTime").val();
+			var applyTime=new Date($("#applyTime").val());
+			$("#applyTime").val(formateTimes(applyTime));
+			var payTime=new Date($("#payTime").val());
+			$("#payTime").val(formateTimes(payTime));
+			var updateDate=new Date($("#updateDate").val());
+			$("#updateDate").val(formateTimes(updateDate));
+			var checkDate=new Date($("#checkDate").val());
+			$("#checkDate").val(formateTimes(checkDate));
+			findStatus("gender","sys_user_sex",$("#gender").val());                          //性别  
+			findStatus("specialCardInfo","special_card_info",$("#specialCardInfo").val());   //优惠卡类型 
+			findStatus("applyStatus","cardUser_apply_status",$("#applyStatus").val());       //申请状态
+			findStatus("applyType","cardUser_apply_type",$("#applyType").val());             //申请方式
+			findStatus("payStatus","cardUser_pay_status",$("#payStatus").val());             //支付状态
+			findStatus("payType","cardUser_pay_type",$("#payType").val());                   //支付方式
+			findStatus("mailType","cardUser_mail_type",$("#mailType").val());                //邮寄自取
+			findStatus("chargeInfo","cardUser_charge_info",$("#chargeInfo").val());          //是否充值 
+			findStatus("rejectInfo","cardUser_reject_info",$("#rejectInfo").val());          //驳回原因
+		})
+		
+		function formateTimes(times){
+			if(isNaN(times.getFullYear())){
+				return "";
+			}
+			var month="";
+			if((times.getMonth()+1)<10){
+				month="-0"+(times.getMonth()+1);
+			}else{
+				month="-"+(times.getMonth()+1);
+			}
+			var dates="";
+			if((times.getDate())<10){
+				dates="-0"+(times.getDate());
+			}else{
+				dates="-"+(times.getDate());
+			}
+			var hourss="";
+			if((times.getHours())<10){
+				hourss=" 0"+(times.getHours());
+			}else{
+				hourss=" "+(times.getHours());
+			}
+			var minutess="";
+			if((times.getMinutes())<10){
+				minutess=":0"+(times.getMinutes());
+			}else{
+				minutess=":"+(times.getMinutes());
+			}
+			var secondss="";
+			if((times.getSeconds())<10){
+				secondss=":0"+(times.getSeconds());
+			}else{
+				secondss=":"+(times.getSeconds());
+			}
+			return times.getFullYear()+month+dates+hourss+minutess+secondss;
+			}
+		
+		$(".layui-layer-btn0", window.parent.document).hide();
+		
+		function findStatus(ids,types,values){
+			$.ajax({
+  				type:"post",
+  				url:  ctx + "model/stationInfo/findStauts",
+  				dataType: "json",
+  				sync:false,
+				data: ({
+					dictType : types
+				}),
+  				success: function (tipInfo)
+  				{
+  					if(tipInfo.length>0){
+  						for(var i=0;i<tipInfo.length;i++){
+							if(tipInfo[i].dictValue==values){
+								$("#"+ids+"").val(tipInfo[i].dictLabel);
+							}
+  						}
+  					}
+  				},
+  				//此处添加错误处理
+  	    		error:function()
+  	    		{
+  	    			$.modal.alertWarning('查询状态信息异常，请稍后再试！');
+  					return;
+  				}
+  			});
+		}
+	</script>
+</body>
+</html>

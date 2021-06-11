@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.model.mapper.YfgDeviceMapper">
+    
+    <resultMap type="YfgDevice" id="YfgDeviceResult">
+        <result property="id"    column="id"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="deviceName"    column="device_name"    />
+        <result property="price"    column="price"    />
+        <result property="cityCode"    column="city_code"    />
+        <result property="area"    column="area"    />
+        <result property="roomStatus"    column="room_status"    />
+        <result property="roomTemperature"    column="room_temperature"    />
+        <result property="roomMoisture"    column="room_moisture"    />
+        <result property="deviceStatus"    column="device_status"    />
+        <result property="usbStatus"    column="usb_status"    />
+        <result property="openingTime"    column="opening_time"    />
+        <result property="openDoorTime"    column="open_door_time"    />
+        <result property="closeDoorTime"    column="close_door_time"    />
+        <result property="channelId"    column="channel_id"    />
+        <result property="deviceException"    column="device_exception"    />
+        <result property="status"    column="status"    />
+        <result property="simNo"    column="sim_no"    />
+        <result property="deviceX"    column="device_x"    />
+        <result property="deviceY"    column="device_y"    />
+        <result property="resPerson"    column="res_person"    />
+        <result property="connMobile"    column="conn_mobile"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="aeraId"    column="aera_id"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="openLockTime"    column="open_lock_time"    />
+        <result property="closeDeviceTime"    column="close_device_time"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="deptId"       column="dept_id"      />
+        <result property="deviceType"    column="device_Type"    />
+        <association property="dept"    column="dept_id"  javaType="SysDept" resultMap="deptResult" />
+
+    </resultMap>
+
+    <resultMap id="deptResult" type="SysDept">
+        <id     property="deptId"   column="dept_id"     />
+        <result property="parentId" column="parent_id"   />
+        <result property="deptName" column="dept_name"   />
+        <result property="orderNum" column="order_num"   />
+        <result property="status"   column="dept_status" />
+    </resultMap>
+
+    <sql id="selectYfgDeviceVo">
+        select u.id, u.device_id, u.device_name, u.price, u.city_code, u.area, u.room_status, u.room_temperature, u.room_moisture, u.device_status, u.usb_status, u.opening_time, u.open_door_time, u.close_door_time, u.channel_id, u.device_exception, u.status, u.sim_no, u.device_x, u.device_y, u.res_person, u.conn_mobile, u.del_flag, u.create_date, u.update_date, u.aera_id, u.remarks, u.open_lock_time, u.close_device_time, u.order_id,u.device_type,
+        d.dept_id, d.parent_id, d.dept_name, d.order_num, d.status as dept_status
+        from yfg_device u
+        left join sys_dept d on u.dept_id = d.dept_id
+    </sql>
+	
+    <select id="selectYfgDeviceList" parameterType="YfgDevice" resultMap="YfgDeviceResult">
+        <include refid="selectYfgDeviceVo"/>
+        <where>  
+            <if test="id != null "> and u.id = #{id}</if>
+             <if test="deviceId != null  and deviceId != '' "> and u.device_id = #{deviceId}</if>
+             <if test="deviceName != null  and deviceName != '' "> and u.device_name = #{deviceName}</if>
+             <if test="price != null "> and u.price = #{price}</if>
+             <if test="cityCode != null  and cityCode != '' "> and u.city_code = #{cityCode}</if>
+             <if test="area != null  and area != '' "> and u.area = #{area}</if>
+             <if test="roomStatus != null  and roomStatus != '' "> and u.room_status = #{roomStatus}</if>
+             <if test="roomTemperature != null  and roomTemperature != '' "> and u.room_temperature = #{roomTemperature}</if>
+             <if test="roomMoisture != null  and roomMoisture != '' "> and u.room_moisture = #{roomMoisture}</if>
+             <if test="deviceStatus != null  and deviceStatus != '' "> and u.device_status = #{deviceStatus}</if>
+             <if test="usbStatus != null  and usbStatus != '' "> and u.usb_status = #{usbStatus}</if>
+             <if test="openingTime != null  and openingTime != '' "> and u.opening_time = #{openingTime}</if>
+             <if test="openDoorTime != null "> and u.open_door_time = #{openDoorTime}</if>
+             <if test="closeDoorTime != null "> and u.close_door_time = #{closeDoorTime}</if>
+             <if test="channelId != null  and channelId != '' "> and u.channel_id = #{channelId}</if>
+             <if test="deviceException != null  and deviceException != '' "> and u.device_exception = #{deviceException}</if>
+             <if test="status != null  and status != '' "> and u.status = #{status}</if>
+             <if test="simNo != null  and simNo != '' "> and u.sim_no = #{simNo}</if>
+             <if test="deviceX != null  and deviceX != '' "> and u.device_x = #{deviceX}</if>
+             <if test="deviceY != null  and deviceY != '' "> and u.device_y = #{deviceY}</if>
+             <if test="resPerson != null  and resPerson != '' "> and u.res_person = #{resPerson}</if>
+             <if test="connMobile != null  and connMobile != '' "> and u.conn_mobile = #{connMobile}</if>
+             <if test="delFlag != null  and delFlag != '' "> and u.del_flag = #{delFlag}</if>
+             <if test="createDate != null "> and u.create_date = #{createDate}</if>
+             <if test="updateDate != null "> and u.update_date > #{updateDate}</if>
+             <if test="aeraId != null  and aeraId != '' "> and u.aera_id = #{aeraId}</if>
+             <if test="remarks != null  and remarks != '' "> and u.remarks = #{remarks}</if>
+             <if test="openLockTime != null "> and u.open_lock_time = #{openLockTime}</if>
+             <if test="closeDeviceTime != null "> and u.close_device_time = #{closeDeviceTime}</if>
+             <if test="orderId != null "> and u.order_id = #{orderId}</if>
+<!--            <if test="deptId != null "> and dept_id = #{deptId}</if>-->
+            <if test="deptId != null and deptId != 0">
+                AND (u.dept_id = #{deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{deptId},ancestors) ))
+            </if>
+            <if test="deviceType != null "> and device_type = #{deviceType}</if>
+            <!-- 数据范围过滤 -->
+            ${params.dataScope}
+         </where>
+    </select>
+    
+    <select id="selectYfgDeviceById" parameterType="Integer" resultMap="YfgDeviceResult">
+        <include refid="selectYfgDeviceVo"/>
+        where id = #{id}
+    </select>
+    
+    <select id="selectYfgDeviceByDeviceId" parameterType="java.lang.String" resultMap="YfgDeviceResult">
+        <include refid="selectYfgDeviceVo"/>
+        where device_id = #{deviceId}
+    </select>
+    
+     <select id="selectNumByCityCode" parameterType="YfgDevice" resultType="java.lang.String">
+       select distinct area from yfg_device
+        <where>
+            <if test="cityCode != null  and cityCode != '' "> and city_code = #{cityCode}</if>
+             <if test="updateDate != null "> and update_date > #{updateDate}</if>
+        </where>
+    </select>
+    
+        
+    <insert id="insertYfgDevice" parameterType="YfgDevice" useGeneratedKeys="true" keyProperty="id">
+        insert into yfg_device
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="deviceId != null  and deviceId != ''  ">device_id,</if>
+			<if test="deviceName != null  and deviceName != ''  ">device_name,</if>
+			<if test="price != null  ">price,</if>
+			<if test="cityCode != null  and cityCode != ''  ">city_code,</if>
+			<if test="area != null  and area != ''  ">area,</if>
+			<if test="roomStatus != null  and roomStatus != ''  ">room_status,</if>
+			<if test="roomTemperature != null  and roomTemperature != ''  ">room_temperature,</if>
+			<if test="roomMoisture != null  and roomMoisture != ''  ">room_moisture,</if>
+			<if test="deviceStatus != null  and deviceStatus != ''  ">device_status,</if>
+			<if test="usbStatus != null  and usbStatus != ''  ">usb_status,</if>
+			<if test="openingTime != null  and openingTime != ''  ">opening_time,</if>
+			<if test="openDoorTime != null  ">open_door_time,</if>
+			<if test="closeDoorTime != null  ">close_door_time,</if>
+			<if test="channelId != null  and channelId != ''  ">channel_id,</if>
+			<if test="deviceException != null  and deviceException != ''  ">device_exception,</if>
+			<if test="status != null  and status != ''  ">status,</if>
+			<if test="simNo != null  and simNo != ''  ">sim_no,</if>
+			<if test="deviceX != null  and deviceX != ''  ">device_x,</if>
+			<if test="deviceY != null  and deviceY != ''  ">device_y,</if>
+			<if test="resPerson != null  and resPerson != ''  ">res_person,</if>
+			<if test="connMobile != null  and connMobile != ''  ">conn_mobile,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="aeraId != null  and aeraId != ''  ">aera_id,</if>
+			<if test="remarks != null  and remarks != ''  ">remarks,</if>
+			<if test="openLockTime != null  ">open_lock_time,</if>
+			<if test="closeDeviceTime != null  ">close_device_time,</if>
+			<if test="orderId != null  ">order_id,</if>
+
+            <if test="deptId != null ">dept_id,</if>
+            <if test="deviceType != null ">device_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="deviceId != null  and deviceId != ''  ">#{deviceId},</if>
+			<if test="deviceName != null  and deviceName != ''  ">#{deviceName},</if>
+			<if test="price != null  ">#{price},</if>
+			<if test="cityCode != null  and cityCode != ''  ">#{cityCode},</if>
+			<if test="area != null  and area != ''  ">#{area},</if>
+			<if test="roomStatus != null  and roomStatus != ''  ">#{roomStatus},</if>
+			<if test="roomTemperature != null  and roomTemperature != ''  ">#{roomTemperature},</if>
+			<if test="roomMoisture != null  and roomMoisture != ''  ">#{roomMoisture},</if>
+			<if test="deviceStatus != null  and deviceStatus != ''  ">#{deviceStatus},</if>
+			<if test="usbStatus != null  and usbStatus != ''  ">#{usbStatus},</if>
+			<if test="openingTime != null  and openingTime != ''  ">#{openingTime},</if>
+			<if test="openDoorTime != null  ">#{openDoorTime},</if>
+			<if test="closeDoorTime != null  ">#{closeDoorTime},</if>
+			<if test="channelId != null  and channelId != ''  ">#{channelId},</if>
+			<if test="deviceException != null  and deviceException != ''  ">#{deviceException},</if>
+			<if test="status != null  and status != ''  ">#{status},</if>
+			<if test="simNo != null  and simNo != ''  ">#{simNo},</if>
+			<if test="deviceX != null  and deviceX != ''  ">#{deviceX},</if>
+			<if test="deviceY != null  and deviceY != ''  ">#{deviceY},</if>
+			<if test="resPerson != null  and resPerson != ''  ">#{resPerson},</if>
+			<if test="connMobile != null  and connMobile != ''  ">#{connMobile},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="aeraId != null  and aeraId != ''  ">#{aeraId},</if>
+			<if test="remarks != null  and remarks != ''  ">#{remarks},</if>
+			<if test="openLockTime != null  ">#{openLockTime},</if>
+			<if test="closeDeviceTime != null  ">#{closeDeviceTime},</if>
+			<if test="orderId != null  ">#{orderId},</if>
+
+            <if test="deptId != null ">#{deptId},</if>
+            <if test="deviceType != null ">#{deviceType},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateYfgDevice" parameterType="YfgDevice">
+        update yfg_device
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceId != null  and deviceId != ''  ">device_id = #{deviceId},</if>
+            <if test="deviceName != null  and deviceName != ''  ">device_name = #{deviceName},</if>
+            <if test="price != null  ">price = #{price},</if>
+            <if test="cityCode != null  and cityCode != ''  ">city_code = #{cityCode},</if>
+            <if test="area != null  and area != ''  ">area = #{area},</if>
+            <if test="roomStatus != null  and roomStatus != ''  ">room_status = #{roomStatus},</if>
+            <if test="roomTemperature != null  and roomTemperature != ''  ">room_temperature = #{roomTemperature},</if>
+            <if test="roomMoisture != null  and roomMoisture != ''  ">room_moisture = #{roomMoisture},</if>
+            <if test="deviceStatus != null  and deviceStatus != ''  ">device_status = #{deviceStatus},</if>
+            <if test="usbStatus != null  and usbStatus != ''  ">usb_status = #{usbStatus},</if>
+            <if test="openingTime != null  and openingTime != ''  ">opening_time = #{openingTime},</if>
+            <if test="openDoorTime != null  ">open_door_time = #{openDoorTime},</if>
+            <if test="closeDoorTime != null  ">close_door_time = #{closeDoorTime},</if>
+            <if test="channelId != null  and channelId != ''  ">channel_id = #{channelId},</if>
+            <if test="deviceException != null  and deviceException != ''  ">device_exception = #{deviceException},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="simNo != null  and simNo != ''  ">sim_no = #{simNo},</if>
+            <if test="deviceX != null  and deviceX != ''  ">device_x = #{deviceX},</if>
+            <if test="deviceY != null  and deviceY != ''  ">device_y = #{deviceY},</if>
+            <if test="resPerson != null  and resPerson != ''  ">res_person = #{resPerson},</if>
+            <if test="connMobile != null  and connMobile != ''  ">conn_mobile = #{connMobile},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="aeraId != null  and aeraId != ''  ">aera_id = #{aeraId},</if>
+            <if test="remarks != null  and remarks != ''  ">remarks = #{remarks},</if>
+            <if test="openLockTime != null  ">open_lock_time = #{openLockTime},</if>
+            <if test="closeDeviceTime != null  ">close_device_time = #{closeDeviceTime},</if>
+            <if test="orderId != null  ">order_id = #{orderId},</if>
+            <if test="deptId != null ">  dept_id = #{deptId},</if>
+            <if test="deviceType != null ">  device_type = #{deviceType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteYfgDeviceById" parameterType="Integer">
+        delete from yfg_device where id = #{id}
+    </delete>
+	
+    <delete id="deleteYfgDeviceByIds" parameterType="String">
+        delete from yfg_device where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

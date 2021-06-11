@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-yfgDevice-add">
+			<input name="deptId" type="hidden" id="treeId"/>
+
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">设备物理编码：</label>
+				<div class="col-sm-8">
+					<input id="deviceId" name="deviceId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">设备名称：</label>
+				<div class="col-sm-8">
+					<input id="deviceName" name="deviceName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">单价/分：</label>
+				<div class="col-sm-8">
+					<input id="price" name="price" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">城市编码：</label>
+				<div class="col-sm-8">
+					<input id="cityCode" name="cityCode" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">区域：</label>
+				<div class="col-sm-8">
+					<input id="area" name="area" class="form-control" type="text">
+				</div>
+			</div>
+		
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">sim卡号：</label>
+				<div class="col-sm-8">
+					<input id="simNo" name="simNo" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">经度：</label>
+				<div class="col-sm-8">
+					<input id="deviceX" name="deviceX" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">维度：</label>
+				<div class="col-sm-8">
+					<input id="deviceY" name="deviceY" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">联系人：</label>
+				<div class="col-sm-8">
+					<input id="resPerson" name="resPerson" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">电话：</label>
+				<div class="col-sm-8">
+					<input id="connMobile" name="connMobile" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remarks" name="remarks" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span style="color: red; ">*</span>归属部门：</label>
+					<div class="col-sm-8">
+						<div class="input-group">
+							<input name="deptName" onclick="selectDeptTree()" id="treeName" type="text" placeholder="请选择归属部门" class="form-control" required>
+							<span class="input-group-addon"><i class="fa fa-search"></i></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+	<script th:src="@{/ajax/libs/select/select2.js}"></script>
+    <script type="text/javascript">
+		var prefix = ctx + "model/yfgDevice"
+		$("#form-yfgDevice-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+
+		/*用户管理-新增-选择部门树*/
+		function selectDeptTree() {
+			var treeId = $("#treeId").val();
+			var deptId = $.common.isEmpty(treeId) ? "100" : $("#treeId").val();
+			var url = ctx + "system/dept/selectDeptTree/" + deptId;
+			var options = {
+				title: '选择部门',
+				width: "380",
+				url: ctx + "system/dept/selectDeptTree/" + deptId,
+				callBack: doSubmit
+			};
+			$.modal.openOptions(options);
+		}
+
+		function doSubmit(index, layero){
+			var tree = layero.find("iframe")[0].contentWindow.$._tree;
+			if ($.tree.notAllowParents(tree)) {
+				var body = layer.getChildFrame('body', index);
+				$("#treeId").val(body.find('#treeId').val());
+				$("#treeName").val(body.find('#treeName').val());
+				layer.close(index);
+			}
+		}
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+				var data = $("#form-yfgDevice-add").serializeArray();
+				debugger;
+				console.log("data is:"+data);
+				$.operate.save(prefix + "/add", data);
+	            // $.operate.save(prefix + "/add", $('#form-yfgDevice-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

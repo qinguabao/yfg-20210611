@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.model.mapper.YfgCommandLogMapper">
+    
+    <resultMap type="YfgCommandLog" id="YfgCommandLogResult">
+        <result property="id"    column="id"    />
+        <result property="commandType"    column="command_type"    />
+        <result property="commandStr"    column="command_str"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="sendOrRes"    column="sendOrRes"    />
+        <result property="commandContent"    column="command_content"    />
+        <result property="cityCode"    column="city_code"    />
+        <result property="area"    column="area"    />
+        <result property="roomStatus"    column="room_status"    />
+        <result property="roomTemperature"    column="room_temperature"    />
+        <result property="roomMoisture"    column="room_moisture"    />
+        <result property="deviceStatus"    column="device_status"    />
+        <result property="usbStatus"    column="usb_status"    />
+        <result property="channelId"    column="channel_id"    />
+        <result property="openTime"    column="open_time"    />
+        <result property="sendFlag"    column="send_flag"    />
+    </resultMap>
+	
+	<sql id="selectYfgCommandLogVo">
+        select id, command_type, command_str, create_time, device_id, sendOrRes, command_content, city_code, area, room_status, room_temperature, room_moisture, device_status, usb_status, channel_id, open_time, send_flag from yfg_command_log
+    </sql>
+	
+    <select id="selectYfgCommandLogList" parameterType="YfgCommandLog" resultMap="YfgCommandLogResult">
+        <include refid="selectYfgCommandLogVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="commandType != null  and commandType != '' "> and command_type = #{commandType}</if>
+             <if test="commandStr != null  and commandStr != '' "> and command_str = #{commandStr}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="deviceId != null  and deviceId != '' "> and device_id = #{deviceId}</if>
+             <if test="sendOrRes != null  and sendOrRes != '' "> and sendOrRes = #{sendOrRes}</if>
+             <if test="commandContent != null  and commandContent != '' "> and command_content = #{commandContent}</if>
+             <if test="cityCode != null  and cityCode != '' "> and city_code = #{cityCode}</if>
+             <if test="area != null  and area != '' "> and area = #{area}</if>
+             <if test="roomStatus != null  and roomStatus != '' "> and room_status = #{roomStatus}</if>
+             <if test="roomTemperature != null  and roomTemperature != '' "> and room_temperature = #{roomTemperature}</if>
+             <if test="roomMoisture != null  and roomMoisture != '' "> and room_moisture = #{roomMoisture}</if>
+             <if test="deviceStatus != null  and deviceStatus != '' "> and device_status = #{deviceStatus}</if>
+             <if test="usbStatus != null  and usbStatus != '' "> and usb_status = #{usbStatus}</if>
+             <if test="channelId != null  and channelId != '' "> and channel_id = #{channelId}</if>
+             <if test="openTime != null  and openTime != '' "> and open_time = #{openTime}</if>
+             <if test="sendFlag != null  and sendFlag != '' "> and send_flag = #{sendFlag}</if>
+
+            <if test="deviceIds != null and deviceIds!=''"> and device_id in (${deviceIds})</if>
+         </where>
+    </select>
+    
+    <select id="selectYfgCommandLogById" parameterType="Integer" resultMap="YfgCommandLogResult">
+        <include refid="selectYfgCommandLogVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertYfgCommandLog" parameterType="YfgCommandLog" useGeneratedKeys="true" keyProperty="id">
+        insert into yfg_command_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="commandType != null  and commandType != ''  ">command_type,</if>
+			<if test="commandStr != null  and commandStr != ''  ">command_str,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="deviceId != null  and deviceId != ''  ">device_id,</if>
+			<if test="sendOrRes != null  and sendOrRes != ''  ">sendOrRes,</if>
+			<if test="commandContent != null  and commandContent != ''  ">command_content,</if>
+			<if test="cityCode != null  and cityCode != ''  ">city_code,</if>
+			<if test="area != null  and area != ''  ">area,</if>
+			<if test="roomStatus != null  and roomStatus != ''  ">room_status,</if>
+			<if test="roomTemperature != null  and roomTemperature != ''  ">room_temperature,</if>
+			<if test="roomMoisture != null  and roomMoisture != ''  ">room_moisture,</if>
+			<if test="deviceStatus != null  and deviceStatus != ''  ">device_status,</if>
+			<if test="usbStatus != null  and usbStatus != ''  ">usb_status,</if>
+			<if test="channelId != null  and channelId != ''  ">channel_id,</if>
+			<if test="openTime != null  and openTime != ''  ">open_time,</if>
+			<if test="sendFlag != null  and sendFlag != ''  ">send_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="commandType != null  and commandType != ''  ">#{commandType},</if>
+			<if test="commandStr != null  and commandStr != ''  ">#{commandStr},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="deviceId != null  and deviceId != ''  ">#{deviceId},</if>
+			<if test="sendOrRes != null  and sendOrRes != ''  ">#{sendOrRes},</if>
+			<if test="commandContent != null  and commandContent != ''  ">#{commandContent},</if>
+			<if test="cityCode != null  and cityCode != ''  ">#{cityCode},</if>
+			<if test="area != null  and area != ''  ">#{area},</if>
+			<if test="roomStatus != null  and roomStatus != ''  ">#{roomStatus},</if>
+			<if test="roomTemperature != null  and roomTemperature != ''  ">#{roomTemperature},</if>
+			<if test="roomMoisture != null  and roomMoisture != ''  ">#{roomMoisture},</if>
+			<if test="deviceStatus != null  and deviceStatus != ''  ">#{deviceStatus},</if>
+			<if test="usbStatus != null  and usbStatus != ''  ">#{usbStatus},</if>
+			<if test="channelId != null  and channelId != ''  ">#{channelId},</if>
+			<if test="openTime != null  and openTime != ''  ">#{openTime},</if>
+			<if test="sendFlag != null  and sendFlag != ''  ">#{sendFlag},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateYfgCommandLog" parameterType="YfgCommandLog">
+        update yfg_command_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="commandType != null  and commandType != ''  ">command_type = #{commandType},</if>
+            <if test="commandStr != null  and commandStr != ''  ">command_str = #{commandStr},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="deviceId != null  and deviceId != ''  ">device_id = #{deviceId},</if>
+            <if test="sendOrRes != null  and sendOrRes != ''  ">sendOrRes = #{sendOrRes},</if>
+            <if test="commandContent != null  and commandContent != ''  ">command_content = #{commandContent},</if>
+            <if test="cityCode != null  and cityCode != ''  ">city_code = #{cityCode},</if>
+            <if test="area != null  and area != ''  ">area = #{area},</if>
+            <if test="roomStatus != null  and roomStatus != ''  ">room_status = #{roomStatus},</if>
+            <if test="roomTemperature != null  and roomTemperature != ''  ">room_temperature = #{roomTemperature},</if>
+            <if test="roomMoisture != null  and roomMoisture != ''  ">room_moisture = #{roomMoisture},</if>
+            <if test="deviceStatus != null  and deviceStatus != ''  ">device_status = #{deviceStatus},</if>
+            <if test="usbStatus != null  and usbStatus != ''  ">usb_status = #{usbStatus},</if>
+            <if test="channelId != null  and channelId != ''  ">channel_id = #{channelId},</if>
+            <if test="openTime != null  and openTime != ''  ">open_time = #{openTime},</if>
+            <if test="sendFlag != null  and sendFlag != ''  ">send_flag = #{sendFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteYfgCommandLogById" parameterType="Integer">
+        delete from yfg_command_log where id = #{id}
+    </delete>
+	
+    <delete id="deleteYfgCommandLogByIds" parameterType="String">
+        delete from yfg_command_log where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-address-edit" th:object="${address}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">用户：</label>
+				<div class="col-sm-8">
+					<input id="userId" name="userId" th:field="*{userId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">手机号码：</label>
+				<div class="col-sm-8">
+					<input id="mobile" name="mobile" th:field="*{mobile}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">收件人姓名：</label>
+				<div class="col-sm-8">
+					<input id="recName" name="recName" th:field="*{recName}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">收件人地址：</label>
+				<div class="col-sm-8">
+					<input id="recAddress" name="recAddress" th:field="*{recAddress}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">省份：</label>
+				<div class="col-sm-8">
+					<input id="proId" name="proId" th:field="*{proId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">城市：</label>
+				<div class="col-sm-8">
+					<input id="cityId" name="cityId" th:field="*{cityId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">区县：</label>
+				<div class="col-sm-8">
+					<input id="countyId" name="countyId" th:field="*{countyId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">邮编：</label>
+				<div class="col-sm-8">
+					<input id="postcode" name="postcode" th:field="*{postcode}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否默认地址：</label>
+				<div class="col-sm-8">
+					<input id="isDefault" name="isDefault" th:field="*{isDefault}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">删除：</label>
+				<div class="col-sm-8">
+					<input id="delFlag" name="delFlag" th:field="*{delFlag}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remarks" name="remarks" th:field="*{remarks}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "model/address";
+		$("#form-address-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-address-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

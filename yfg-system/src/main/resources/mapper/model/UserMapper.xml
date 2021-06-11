@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.model.mapper.UserMapper">
+    
+    <resultMap type="User" id="UserResult">
+        <result property="id"    column="id"    />
+        <result property="openId"    column="open_id"    />
+        <result property="appletsopenid"    column="appletsopenid"    />
+        <result property="unionid"    column="unionid"    />
+        <result property="loginName"    column="login_name"    />
+        <result property="passwd"    column="passwd"    />
+        <result property="gender"    column="gender"    />
+        <result property="nickName"    column="nick_name"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="source"    column="source"    />
+        <result property="city"    column="city"    />
+        <result property="province"    column="province"    />
+        <result property="country"    column="country"    />
+        <result property="headimgurl"    column="headimgurl"    />
+        <result property="lastLoginTime"    column="last_login_time"    />
+        <result property="lastIp"    column="last_ip"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+	
+	<sql id="selectUserVo">
+        select id, open_id, appletsopenid,unionid,login_name, passwd, gender, nick_name, mobile, create_date, update_date, source, city, province, country, headimgurl, last_login_time, last_ip, remarks from col_user
+    </sql>
+	
+    <select id="selectUserList" parameterType="User" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        <where>  
+             <if test="id != null "> and id = #{id}</if>
+             <if test="openId != null  and openId != '' "> and open_id = #{openId}</if>
+             <if test="appletsopenid != null  and appletsopenid != '' "> and appletsopenid = #{appletsopenid}</if>
+             <if test="unionid != null  and unionid != '' "> and unionid = #{unionid}</if>
+             <if test="loginName != null  and loginName != '' "> and login_name = #{loginName}</if>
+             <if test="passwd != null  and passwd != '' "> and passwd = #{passwd}</if>
+             <if test="gender != null  and gender != '' "> and gender = #{gender}</if>
+             <if test="nickName != null  and nickName != '' "> and nick_name = #{nickName}</if>
+             <if test="mobile != null  and mobile != '' "> and mobile = #{mobile}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="source != null  and source != '' "> and source = #{source}</if>
+             <if test="city != null  and city != '' "> and city = #{city}</if>
+             <if test="province != null  and province != '' "> and province = #{province}</if>
+             <if test="country != null  and country != '' "> and country = #{country}</if>
+             <if test="headimgurl != null  and headimgurl != '' "> and headimgurl = #{headimgurl}</if>
+             <if test="lastLoginTime != null "> and last_login_time = #{lastLoginTime}</if>
+             <if test="lastIp != null  and lastIp != '' "> and last_ip = #{lastIp}</if>
+             <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
+         </where>
+    </select>
+    
+    <select id="selectUserById" parameterType="Integer" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        where id = #{id}
+    </select>
+   <select id="selectUserByOpenId" parameterType="String" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        where open_id = #{openId}
+    </select>
+
+    <select id="selectUserByAppletsOpenId" parameterType="String" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        where appletsopenid = #{appletsopenid}
+    </select>
+        
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        insert into col_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="openId != null  and openId != ''  ">open_id,</if>
+            <if test="appletsopenid != null  and appletsopenid != ''  ">appletsopenid,</if>
+            <if test="unionid != null  and unionid != ''  ">unionid,</if>
+           	<if test="loginName != null  and loginName != ''  ">login_name,</if>
+			<if test="passwd != null  and passwd != ''  ">passwd,</if>
+			<if test="gender != null  and gender != ''  ">gender,</if>
+			<if test="nickName != null  and nickName != ''  ">nick_name,</if>
+			<if test="mobile != null  and mobile != ''  ">mobile,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="source != null  and source != ''  ">source,</if>
+			<if test="city != null  and city != ''  ">city,</if>
+			<if test="province != null  and province != ''  ">province,</if>
+			<if test="country != null  and country != ''  ">country,</if>
+			<if test="headimgurl != null  and headimgurl != ''  ">headimgurl,</if>
+			<if test="lastLoginTime != null  ">last_login_time,</if>
+			<if test="lastIp != null  and lastIp != ''  ">last_ip,</if>
+			<if test="remarks != null  and remarks != ''  ">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="openId != null  and openId != ''  ">#{openId},</if>
+            <if test="appletsopenid != null  and appletsopenid != ''  ">#{appletsopenid},</if>
+            <if test="unionid != null  and unionid != ''  ">#{unionid},</if>
+			<if test="loginName != null  and loginName != ''  ">#{loginName},</if>
+			<if test="passwd != null  and passwd != ''  ">#{passwd},</if>
+			<if test="gender != null  and gender != ''  ">#{gender},</if>
+			<if test="nickName != null  and nickName != ''  ">#{nickName},</if>
+			<if test="mobile != null  and mobile != ''  ">#{mobile},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="source != null  and source != ''  ">#{source},</if>
+			<if test="city != null  and city != ''  ">#{city},</if>
+			<if test="province != null  and province != ''  ">#{province},</if>
+			<if test="country != null  and country != ''  ">#{country},</if>
+			<if test="headimgurl != null  and headimgurl != ''  ">#{headimgurl},</if>
+			<if test="lastLoginTime != null  ">#{lastLoginTime},</if>
+			<if test="lastIp != null  and lastIp != ''  ">#{lastIp},</if>
+			<if test="remarks != null  and remarks != ''  ">#{remarks},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateUser" parameterType="User">
+        update col_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="openId != null  and openId != ''  ">open_id = #{openId},</if>
+            <if test="appletsopenid != null  and appletsopenid != ''  ">appletsopenid = #{appletsopenid},</if>
+            <if test="unionid != null  and unionid != ''  ">unionid = #{unionid},</if>
+            <if test="loginName != null  and loginName != ''  ">login_name = #{loginName},</if>
+            <if test="passwd != null  and passwd != ''  ">passwd = #{passwd},</if>
+            <if test="gender != null  and gender != ''  ">gender = #{gender},</if>
+            <if test="nickName != null  and nickName != ''  ">nick_name = #{nickName},</if>
+            <if test="mobile != null  and mobile != ''  ">mobile = #{mobile},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="source != null  and source != ''  ">source = #{source},</if>
+            <if test="city != null  and city != ''  ">city = #{city},</if>
+            <if test="province != null  and province != ''  ">province = #{province},</if>
+            <if test="country != null  and country != ''  ">country = #{country},</if>
+            <if test="headimgurl != null  and headimgurl != ''  ">headimgurl = #{headimgurl},</if>
+            <if test="lastLoginTime != null  ">last_login_time = #{lastLoginTime},</if>
+            <if test="lastIp != null  and lastIp != ''  ">last_ip = #{lastIp},</if>
+            <if test="remarks != null  and remarks != ''  ">remarks = #{remarks},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteUserById" parameterType="Integer">
+        delete from col_user where id = #{id}
+    </delete>
+	
+    <delete id="deleteUserByIds" parameterType="String">
+        delete from col_user where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

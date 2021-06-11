@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>资料填写</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link href="css/mobiscroll.custom-3.0.0-beta2.min.css" rel="stylesheet" type="text/css">
+    <link href="css/s_common.css?v=20161222" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+    <script type="text/javascript" src="js/json2.js"></script>
+    <script type="text/javascript" src="js/s_common.js"></script>
+</head>
+
+<body>
+<!-- 资料填写第一步 -->
+<div class="step1-page" >
+    <img class="stepimg" src="./images/step1.png"/>
+    
+    <div class="cs-info-main">
+        <div class="cs-dt-main">
+            <input id="cyear" name="cyear" value="" type="hidden">
+            
+            <div class="cs-stu-item-tr1">姓名<span class="req">*</span>：</div>
+            <div class="cs-stu-item-tr"><input id="owner_name" class="cs-width100 user_name" type="text" placeholder="请输入姓名"  maxlength="10" /></div>
+            
+            <div class="cs-stu-item-tr cs-box" style="margin-top: 0.4rem">性别<span class="req">*</span>：<div class="cs-gender-box cs-box-flex1 cs-box"><div class="choosebox choosebox-select" flag="1"></div><div>男</div></div><div class="cs-gender-box cs-box-flex1 cs-box"><div class="choosebox" flag="2"></div><div>女</div></div></div>
+            
+            <div class="cs-stu-item-tr1">学校类型<span class="req">*</span>：<span class="note">(小学、初中、高中、中职、特殊学校)</span></div>
+            
+            <div class="cs-stu-item-tr">
+                <input type="hidden" id="shcoolTypeInput" />
+                <div class="cs-box-flex1 sel-schooltype">
+                    <select name="schooltype" id="schooltype" >
+                        <option value=""></option>
+                        <option value="S">小学</option>
+                        <option value="ZX">初中</option>
+                        <option value="GZ">高中</option>
+                        <option value="ZZ">中职</option>
+                        <option value="TS">特殊学校</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="cs-re2"><strong>注意：</strong>学生卡有效期最高为6年，若提前办理下一学段学生卡，则结束日期也将提前，请自行把握合适的办理时间。</div>
+            
+            
+            <div class="cs-stu-item-tr1">毕业年份<span class="req">*</span>：</div>
+            <div class="cs-stu-item-tr">
+                <input type="hidden" id="remark_fiveInput" />
+                <select name="remark_five" id="remark_five" >
+                    <option value=""></option>
+                    <option value="2017" >2017</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                </select>
+            </div>
+            
+            <div class="cs-re2"><strong>注意：</strong>小学升初中须重新办卡，请正确计算毕业年份。</div>
+            
+            <div class="cs-stu-item-tr1">联系电话：</div>
+            <div class="cs-stu-item-tr"><input id="remark_one" class="cs-width100" type="text" placeholder="请输入区号-座机号码" maxlength="60" /></div>
+            
+            <div class="cs-stu-item-tr1">身份证号<span class="req">*</span>：<span class="note">(证件中有字母需大写)</span></div>
+            <div class="cs-stu-item-tr"><input id="idCardNumber" class="cs-width100" type="text" placeholder="请输入真实身份证号码" maxlength="40" /></div>
+            
+            
+            <div class="cs-stu-item-tr1">手机号码<span class="req">*</span>：</div>
+            <div class="cs-stu-item-tr"><input id="remark_two" class="cs-width100" type="text" placeholder="可用移动、联通、电信手机号码" maxlength="50" /></div>
+            
+            <div class="cs-info-remark">
+		        <p><strong>注：</strong><span class="req">*</span>为必填项;</p>
+		        <p class="cs-paragraph">本操作流程无须再到线下网点打印表格，资料填写完毕后，选择邮寄或自取方式即可领取到学生卡。</p>
+		    </div>
+        
+        </div>
+    </div>
+    
+    <div class="cs-dt-footer"><div class="cs-btn-next">下一步</div></div>
+    
+</div>
+<div class="clear" style="height: 1rem;">&nbsp;</div>
+
+<script type="text/javascript">
+var _identifid = 'ohM8Fj3ODToHzSUJaBvhRs5tuvK0';
+if (_identifid == "" || _identifid =="undefined") {
+	location.href = 'https://whtpay.whbaw.cn/paytest/stucard_index.html';
+}
+
+//给用户做提示；
+//alert("温馨提示：\n1、小学生卡毕业当年年底失效；\n2、初高中其他卡，用卡年龄上限为18岁；\n3、小升初需要重新缴费制卡；");
+var cardType = location.href.split('?')[1].split('=')[1];
+function checkStuInfo(jsonobj) {
+	var owner_name = $("#owner_name").val();
+	if (!owner_name || owner_name == "" || $.trim(owner_name) == "") {
+		alert('请输入姓名');
+		return false;
+	}
+	jsonobj['ownerName'] = owner_name;//姓名
+	jsonobj['gender'] = $(".choosebox-select").attr("flag");//性别
+	
+	var inSchoolTime = $("#schooltype_dummy").val();
+	if (!inSchoolTime || inSchoolTime == "") {
+		alert('请选择学校类型');
+		return false;
+	}
+	jsonobj['inSchoolTime'] = getSchoolVal(inSchoolTime);
+	
+	var remark_fiveInput = $("#remark_five_dummy").val();
+	if (!remark_fiveInput || remark_fiveInput == "") {
+		alert('请选择你目前所处学段受教育正常毕业年份');
+		return false;
+	}
+	jsonobj['remarkFive'] = remark_fiveInput;
+	
+	var remark_one = $("#remark_one").val();
+	/*if (remark_one == null || remark_one.length != 11){
+		alert('请输入正确的手机号');
+		return false;
+	}*/
+	jsonobj['telephone'] = remark_one;
+	
+	if (!checkage()) return false;//检查身份证
+	var idCardNumber = $('#idCardNumber').val();
+	jsonobj['idCardNumber'] = idCardNumber;
+	
+	var remark_two = $("#remark_two").val();
+    remark_two = remark_two.trim();
+	if (!remark_two || remark_two == "" || remark_two.length != 11) {
+		alert('请输入正确的手机号码');
+		return false;
+	}
+	jsonobj['remark_two'] = remark_two;
+	return true;
+}
+
+
+function writeJson1() {
+	var jsonobjstr = localStorage.getItem("stu_card_info");
+	if (!jsonobjstr || jsonobjstr == '') {
+		return false;
+	}
+	var jsonobj = JSON.parse(jsonobjstr);
+	$("#owner_name").val(jsonobj['ownerName']);
+	
+	$(".cs-gender-box .choosebox").removeClass("choosebox-select");
+	var _gender = jsonobj['gender'];
+	if (_gender == "1" || _gender == "2") {
+		$($(".choosebox")[_gender-1]).addClass("choosebox-select");
+	}
+	
+	$("#remark_one").val(jsonobj['telephone']);
+	$("#idCardNumber").val(jsonobj['idCardNumber']);
+	
+	$("#remark_two").val(jsonobj['remark_two']);
+	
+	$("#schooltype_dummy").val(getSchoolName(jsonobj['inSchoolTime']));
+	$("#remark_five_dummy").val(jsonobj['remarkFive']);
+}
+
+
+
+$(function (){
+	var time1 = new Date().Format("yyyyMMdd");
+	$("#cyear").val(time1);
+	
+    //性别
+    $(".cs-gender-box").click(function () {
+        $(".cs-gender-box .choosebox").removeClass("choosebox-select");
+        $(this).find(".choosebox").addClass("choosebox-select");
+    })
+
+    //下一步
+    $(".cs-btn-next").click(function () {
+        var jsonobj = {};
+        jsonobj.cardType = cardType;
+        if (checkStuInfo(jsonobj)) {
+        	localStorage.setItem("stu_card_info", JSON.stringify(jsonobj));
+        	console.log(jsonobj);
+        	window.location.href = "add_step2.html?identifid="+_identifid;
+        }
+    });
+    
+    
+    $('#schooltype').mobiscroll().select({
+        theme: 'mobiscroll',      // Specify theme like: theme: 'ios' or omit setting to use default
+        lang: 'zh',    // Specify language like: lang: 'pl' or omit setting to use default
+        display: 'bottom',  // Specify display mode like: display: 'bottom' or omit setting to use default
+        placeholder:'请选择学校类型',
+        minWidth: 200,
+        onSet:function(sobj, inst){  
+            //显示的是select标签选中的值  
+            $("#shcoolTypeInput").val(getSchoolVal(sobj['valueText']));
+            //console.log(sobj['valueText']);
+        }
+    });
+    
+    $('#remark_five').mobiscroll().select({
+        theme: 'mobiscroll',      // Specify theme like: theme: 'ios' or omit setting to use default
+        lang: 'zh',    // Specify language like: lang: 'pl' or omit setting to use default
+        display: 'bottom',  // Specify display mode like: display: 'bottom' or omit setting to use default
+        placeholder:'请选择你目前所处学段受教育正常毕业年份',
+        minWidth: 200,
+        onSet:function(sobj, inst){  
+            //显示的是select标签选中的值  
+            $("#remark_fiveInput").val(sobj['valueText']);
+            //console.log(sobj['valueText']);
+        }
+    });
+    writeJson1();
+})
+
+</script>
+</body>
+</html>

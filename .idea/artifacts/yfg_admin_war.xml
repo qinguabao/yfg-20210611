@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="yfg-admin:war">
+    <output-path>$PROJECT_DIR$/yfg-admin/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>yfg-admin</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="yfg-admin.war">
+      <element id="artifact" artifact-name="yfg-admin:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-specialCardInfo-edit" th:object="${specialCardInfo}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">优惠卡名称：</label>
+				<div class="col-sm-8">
+					<input id="cardTypeName" name="cardTypeName" th:field="*{cardTypeName}" class="form-control" type="text">
+				</div>
+			</div>
+			
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">卡费用：</label>
+				<div class="col-sm-8">
+					<input id="cardFee" name="cardFee" th:field="*{cardFee}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">快递费用：</label>
+				<div class="col-sm-8">
+					<input id="mailFee" name="mailFee" th:field="*{mailFee}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">卡类型：</label>
+				<div class="col-sm-8">
+				<!-- 	<input id="cardType" name="cardType" th:field="*{cardType}" class="form-control" type="text"> -->
+				 <select name="cardType" class="form-control m-b" th:with="type=${@dict.getType('special_card_info')}">
+				                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{cardType}"></option>
+				                </select>
+				</div>
+			</div>
+			<!-- <div class="form-group">	
+				<label class="col-sm-3 control-label">版面：</label>
+				<div class="col-sm-8">
+					<input id="layoutId" name="layoutId" th:field="*{layoutId}" class="form-control" type="text">
+				</div>
+			</div> -->
+				<!-- <div class="form-group">	
+				<label class="col-sm-3 control-label">状态：</label>
+				<div class="col-sm-8">
+					<input id="status" name="status" th:field="*{status}" class="form-control" type="text">
+				</div>
+			</div> -->
+			
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remarks" name="remarks" th:field="*{remarks}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "model/specialCardInfo";
+		$("#form-specialCardInfo-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-specialCardInfo-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

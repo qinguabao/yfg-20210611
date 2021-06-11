@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.model.mapper.YfgPackageMapper">
+    
+    <resultMap type="YfgPackage" id="YfgPackageResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="useTime"    column="use_time"    />
+        <result property="useMoney"    column="use_money"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="useDescri"    column="use_descri"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="deptId"       column="dept_id"      />
+
+        <association property="dept"    column="dept_id"  javaType="SysDept" resultMap="deptResult" />
+    </resultMap>
+
+    <resultMap id="deptResult" type="SysDept">
+        <id     property="deptId"   column="dept_id"     />
+        <result property="parentId" column="parent_id"   />
+        <result property="deptName" column="dept_name"   />
+        <result property="orderNum" column="order_num"   />
+        <result property="status"   column="dept_status" />
+    </resultMap>
+	
+	<sql id="selectYfgPackageVo">
+        select p.id, p.name, p.use_time, p.use_money, p.create_date, p.update_date, p.del_flag, p.use_descri, p.remarks,
+          d.dept_id, d.parent_id, d.dept_name, d.order_num, d.status as dept_status
+         from yfg_package p
+         left join sys_dept d on p.dept_id = d.dept_id
+    </sql>
+	
+    <select id="selectYfgPackageList" parameterType="YfgPackage" resultMap="YfgPackageResult">
+        <include refid="selectYfgPackageVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="useTime != null "> and use_time = #{useTime}</if>
+             <if test="useMoney != null  and useMoney != '' "> and use_money = #{useMoney}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="useDescri != null  and useDescri != '' "> and use_descri = #{useDescri}</if>
+             <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
+            <if test="deptId != null and deptId != 0">
+                AND (p.dept_id = #{deptId} OR p.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{deptId},ancestors) ))
+            </if>
+
+            <!-- 数据范围过滤 -->
+            ${params.dataScope}
+         </where>
+    </select>
+    
+    <select id="selectYfgPackageById" parameterType="Integer" resultMap="YfgPackageResult">
+        <include refid="selectYfgPackageVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertYfgPackage" parameterType="YfgPackage" useGeneratedKeys="true" keyProperty="id">
+        insert into yfg_package
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="useTime != null  ">use_time,</if>
+			<if test="useMoney != null  and useMoney != ''  ">use_money,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="useDescri != null  and useDescri != ''  ">use_descri,</if>
+			<if test="remarks != null  and remarks != ''  ">remarks,</if>
+            <if test="deptId != null ">dept_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="useTime != null  ">#{useTime},</if>
+			<if test="useMoney != null  and useMoney != ''  ">#{useMoney},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="useDescri != null  and useDescri != ''  ">#{useDescri},</if>
+			<if test="remarks != null  and remarks != ''  ">#{remarks},</if>
+            <if test="deptId != null ">#{deptId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateYfgPackage" parameterType="YfgPackage">
+        update yfg_package
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="useTime != null  ">use_time = #{useTime},</if>
+            <if test="useMoney != null  and useMoney != ''  ">use_money = #{useMoney},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="useDescri != null  and useDescri != ''  ">use_descri = #{useDescri},</if>
+            <if test="remarks != null  and remarks != ''  ">remarks = #{remarks},</if>
+            <if test="deptId != null ">  dept_id = #{deptId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteYfgPackageById" parameterType="Integer">
+        delete from yfg_package where id = #{id}
+    </delete>
+	
+    <delete id="deleteYfgPackageByIds" parameterType="String">
+        delete from yfg_package where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

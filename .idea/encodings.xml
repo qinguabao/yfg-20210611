@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-admin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-admin/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-admin/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-framework" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-framework/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-generator" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-generator/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-generator/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-quartz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-quartz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-quartz/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-system" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-system/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yfg-system/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

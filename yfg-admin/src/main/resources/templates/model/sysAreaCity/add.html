@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-sysAreaCity-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">区域级别：</label>
+				<div class="col-sm-8">
+					<select name="aLEVEL" id="aLEVEL" class="form-control" required="required" onchange="selectPro();">
+						<option value="">请选择区域级别</option>
+						<option value="1">省份/直辖市</option>
+						<option value="2">城市</option>
+						<option value="3">区县</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group display-pro" style="display: none;">	
+				<label class="col-sm-3 control-label">请选择省份/直辖市：</label>
+				<div class="col-sm-8">
+					<select name="proId" id="proId" class="form-control" onchange="selectCity();">
+					</select>
+				</div>
+			</div>
+			<div class="form-group display-city" style="display: none;">	
+				<label class="col-sm-3 control-label">请选择城市：</label>
+				<div class="col-sm-8">
+					<select name="cityId" id="cityId" class="form-control">
+					</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">区域名称：</label>
+				<div class="col-sm-8">
+					<input id="nAME" name="nAME" class="form-control" type="text" onclick="falgaLEVEL();" required="required">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">显示排序：</label>
+				<div class="col-sm-8">
+					<input id="sORT" name="sORT" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "model/sysAreaCity"
+		$("#form-sysAreaCity-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-sysAreaCity-add').serialize());
+	        }
+	    }
+		//查看区域级别是否选中
+		function falgaLEVEL(){
+			var aLEVEL=$("#aLEVEL").val();
+			if(!aLEVEL){
+				$.modal.alertWarning("请选择区域级别");
+			}
+		}
+		//根据区域级别选择省份/直辖市及城市的展示
+		function selectPro(){
+			var aLEVEL=$("#aLEVEL").val();
+			if(aLEVEL=="2"){
+				findpName();
+				$("#cityId").empty();
+				$(".display-pro").css('display','block');
+				$(".display-city").css('display','none');
+				$("#cityId").attr('required',false);
+				$("#proId").attr('required',true);
+			}else if(aLEVEL=="3"){
+				findpName();
+				$("#cityId").empty();
+				$(".display-pro").css('display','block');
+				$(".display-city").css('display','block');
+				$("#proId").attr('required',true);
+				$("#cityId").attr('required',true);
+			}else if(aLEVEL!="1"&&aLEVEL!="2"&&aLEVEL!="3"){
+				$(".display-pro").css('display','none');
+				$(".display-city").css('display','none');
+				$("#proId").attr('required',false);
+				$("#cityId").attr('required',false);
+			}
+		}
+		//根据区域级别查询省份/直辖市
+		function findpName(){
+			var options="";
+			$.ajax({
+				type:"post",
+				url: prefix+"/findPro",
+				dataType: "json",
+				data: ({
+					pID : 0
+				}),
+				success: function (tipInfo)
+				{
+					if(tipInfo.length>0){
+						for(var i=0;i<tipInfo.length;i++){
+							options += '<option value="' + tipInfo[i].id + '">' + tipInfo[i].name + '</option>';
+						}
+						$("#proId").empty().append('<option value="">请选择</option>').append(options);
+					}
+				},
+				//此处添加错误处理
+	    		error:function()
+	    		{
+	    			$.modal.alertWarning('查询省份/直辖市信息异常，请稍后再试！');
+					return;
+				}
+			});
+		}
+		//根据省份/直辖市查询城市
+		function selectCity(){
+			var options="";
+			var pID=$("#proId").val();
+			var aLEVEL=$("#aLEVEL").val();
+			if(pID&&aLEVEL=="3"){
+				$.ajax({
+					type:"post",
+					url: prefix+"/findPro",
+					dataType: "json",
+					data: ({
+						pID : pID
+					}),
+					success: function (tipInfo)
+					{
+						if(tipInfo.length>0){
+							for(var i=0;i<tipInfo.length;i++){
+								options += '<option value="' + tipInfo[i].id + '">' + tipInfo[i].name + '</option>';
+							}
+							$("#cityId").empty().append('<option value="">请选择</option>').append(options);
+						}
+					},
+					//此处添加错误处理
+		    		error:function()
+		    		{
+		    			$.modal.alertWarning('查询城市信息异常，请稍后再试！');
+						return;
+					}
+				});
+			}
+		}
+	</script>
+</body>
+</html>

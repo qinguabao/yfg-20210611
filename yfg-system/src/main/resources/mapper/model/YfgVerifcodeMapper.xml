@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.model.mapper.YfgVerifcodeMapper">
+    
+    <resultMap type="YfgVerifcode" id="YfgVerifcodeResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="wxOpneid"    column="wx_opneid"    />
+        <result property="mobilephone"    column="mobilephone"    />
+    </resultMap>
+	
+	<sql id="selectYfgVerifcodeVo">
+        select id, code, create_time, wx_opneid, mobilephone from yfg_verifcode
+    </sql>
+	
+    <select id="selectYfgVerifcodeList" parameterType="YfgVerifcode" resultMap="YfgVerifcodeResult">
+        <include refid="selectYfgVerifcodeVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="code != null  and code != '' "> and code = #{code}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="wxOpneid != null  and wxOpneid != '' "> and wx_opneid = #{wxOpneid}</if>
+             <if test="mobilephone != null  and mobilephone != '' "> and mobilephone = #{mobilephone}</if>
+         </where>
+    </select>
+    
+    <select id="selectYfgVerifcodeById" parameterType="Integer" resultMap="YfgVerifcodeResult">
+        <include refid="selectYfgVerifcodeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertYfgVerifcode" parameterType="YfgVerifcode" useGeneratedKeys="true" keyProperty="id">
+        insert into yfg_verifcode
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null  and code != ''  ">code,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="wxOpneid != null  and wxOpneid != ''  ">wx_opneid,</if>
+			<if test="mobilephone != null  and mobilephone != ''  ">mobilephone,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="code != null  and code != ''  ">#{code},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="wxOpneid != null  and wxOpneid != ''  ">#{wxOpneid},</if>
+			<if test="mobilephone != null  and mobilephone != ''  ">#{mobilephone},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateYfgVerifcode" parameterType="YfgVerifcode">
+        update yfg_verifcode
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="code != null  and code != ''  ">code = #{code},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="wxOpneid != null  and wxOpneid != ''  ">wx_opneid = #{wxOpneid},</if>
+            <if test="mobilephone != null  and mobilephone != ''  ">mobilephone = #{mobilephone},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteYfgVerifcodeById" parameterType="Integer">
+        delete from yfg_verifcode where id = #{id}
+    </delete>
+	
+    <delete id="deleteYfgVerifcodeByIds" parameterType="String">
+        delete from yfg_verifcode where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

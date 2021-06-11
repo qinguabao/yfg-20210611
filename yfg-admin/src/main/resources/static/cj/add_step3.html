@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>资料填写</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+
+<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<link rel="stylesheet" href="css/mobiscroll.custom-3.0.0-beta2.min.css" />
+<link href="css/s_common.css?v=201701151" rel="stylesheet" type="text/css">
+	<style>
+		.sel-schooltype{
+			height: 1.8rem;
+		}
+		.sel-schooltype input{
+			height: 1.8rem;
+			outline: none;
+			box-sizing: border-box;
+			padding-left: 0.6rem;
+			border:1px solid #d6d6d6;
+		/*	width: 80%!important;*/
+		}
+	</style>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/json2.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js" ></script>
+<script type="text/javascript" src="js/md5.js"></script>
+<script type="text/javascript" src="js/jssort.js"></script>
+<script type="text/javascript" src="js/s_common.js"></script>
+
+
+<script type="text/javascript">
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: 'wxa4eb5bda541ec975', // 必填，公众号的唯一标识
+        timestamp:'1553393728' , // 必填，生成签名的时间戳
+        nonceStr: '1553393728', // 必填，生成签名的随机串
+        signature: '818d8a8ff3229e4a743667ec9f20c3db06575d91',// 必填，签名，见附录1
+        jsApiList: ['chooseWXPay','hideOptionMenu'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        WeixinJSBridge.call('hideOptionMenu');
+       //wx.hideOptionMenu();
+    });
+    //签名算法
+    function signParams(signArr) {
+        var data = ksort(signArr);
+        var signRet = "";
+        var signWx = "13bac539611fa3d62616c940fe82bb66";
+        for (var item in data) {
+            signRet += (item + "=" + data[item] + "&");
+        }
+        signRet += ("signkey=" + signWx);
+        var sign = hex_md5(signRet).toUpperCase();
+        //return signRet + "&sign=" + sign;
+        return signRet + "|" + sign;
+    }
+    
+    function short_md5(str) {
+    	var md = hex_md5(str);
+    	var md16 = md.substr(8, 16);
+        return md16;
+    }
+    
+    </script>
+</head>
+
+<body class="step3-body">
+	<!-- 资料填写第三步 -->
+	<div class="step3-page">
+		  <img class="stepimg" src="./images/step3.png"/>
+		<div class="cs-info-main">
+			<div class="cs-dt-main">
+				<h4>请确认以下信息</h4>
+				<div class="usr-info-block">
+					<div class="cs-info-it">
+						学生姓名：<span class='info-ownerName'></span>
+					</div>
+					<div class="cs-info-it">
+						性别：<span class='info-gender'></span>
+					</div>
+					<div class="cs-info-it">
+						学校类型：<span class='info-inSchoolTime'></span>
+					</div>
+					<div class="cs-info-it">
+						毕业年份：<span class='info-remarkFive'></span>
+					</div>
+					<div class="cs-info-it">
+						手机号码：<span class='info-telephone'></span>
+					</div>
+					<div class="cs-info-it">
+						身份证号：<span class='info-idCardNumber'></span>
+					</div>
+				</div>
+				<div class="cs-re2"><strong>注：</strong>请仔细核实信息，审核通过即进入制卡流程，不能再更改。</div>
+				<div class="right cs-tr-item">
+					<span>小计：</span><span class="cs-color1 littlePay">￥20.00</span>
+				</div>
+			</div>
+			
+			<!-- 
+			<div class="cs-notice cs-notice1">
+			    <div class="red"><strong>【公告】</strong>因春节物流公司放假,1月16号后审核通过的订单,将在2月6日寄出。</div>
+ 			</div> 
+ 			-->
+			
+			<!-- 
+			<div class="cs-notice cs-notice2" style="display: none;">
+ 			    <div class="red"><strong>【公告】</strong>因春节放假,1月27号-29日不能领取学生卡;1月19日后提交申请的订单,将在2月6日开始制卡。</div>
+ 			</div>
+ 			 -->
+ 			 
+ 			<!-- 
+ 			<div class="cs-notice cs-notice2">
+ 			    <div class="red"><strong>【公告】</strong>因国庆假期，10月1号前审核通过的订单，将于10月9号制卡；10月1日后提交的信息，将于10月9号开始审核。</div>
+ 			</div>
+ 			 -->
+ 			
+ 			<!-- 
+ 			<div class="cs-notice cs-notice2">
+ 			    <div class="red"><strong>【公告】</strong>快递已全线停运，审核通过的卡片将在2月26日统一寄出</div>
+ 			</div>
+ 			 -->
+ 			 
+ 			 <div class="cs-notice cs-notice2">
+ 			 <!-- 
+ 			    <div class="red"><strong>【公告】</strong>因制卡流程调整，近期所提交学生卡将在5个工作日内审核，敬请谅解，谢谢。</div>
+
+                 <div class="red"><strong>通知：春节期间学生卡邮寄自1月25日停止；学生卡审核自2月2日暂停，2月13日学生卡恢复正常审核及邮寄。自取并显示已发货的学生卡在2月7日后，可在工作时间前往指定客服点取卡。</div>
+                 -->
+ 			</div>
+
+			<div class="cs-getfun-st">
+				<div class="cs-box cs-tr-item cs-send-type cs-width100">
+					<div class="cs-box-flex1">领取方式：</div>
+					<div class="">
+						<div class="cs-needrece-box  cs-box">
+							<div class="choosebox choosebox-select" flag="1"></div>
+							<div>邮寄</div>
+							<div class="choosebox " flag="2"></div>
+							<div>自取</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="cs-adr_rece">
+					<ul>
+						<li>
+							<div class="cs-stu-item cs-box cs-width100">
+								<div class="cs-item-ne">
+									收件人<span class="red">*</span>：
+								</div>
+								<div class="cs-box-flex1">
+									<input class="cs-width100 adr_receiname" type="text"
+										placeholder="请输入收件人姓名" />
+								</div>
+							</div>
+						</li>
+
+						<li>
+							<div class="cs-stu-item cs-box cs-width100">
+								<div class="cs-item-ne">
+									收件电话<span class="red">*</span>：
+								</div>
+								<div class="cs-box-flex1">
+									<input class="cs-width100 adr_receimob" type="text"
+										placeholder="请输入收件电话" />
+								</div>
+							</div>
+						</li>
+
+						<li>
+							<div class="cs-stu-item cs-box cs-width100">
+								<div class="cs-item-ne">
+									收件地址<span class="red">*</span>：
+								</div>
+								<div class="cs-box-flex1">
+									<input id="picker" class="cs-width100 adr_receiaddr" type="text"
+										placeholder="请输入收件地址" />
+								</div>
+							</div>
+						</li>
+
+					</ul>
+                    
+                    <div class="cs-box cs-width100 cs-tr-item">
+                        <div class="cs-box-flex1">(预计10-15个工作日可寄出)</div>
+                        <div class="right">
+    						<span>平邮：</span><span class="cs-color1 youfei">￥10.00</span>
+    					</div>
+                    </div>
+					
+
+				</div>
+
+
+				<div class="cs-adr_rece cs-zique hide">
+					
+					<div class="cs-box cs-ziquneirong">
+						<!--<div class="cs-ziquxuan">
+							<div class="ziqu-choosebox"></div>
+						</div>-->
+						<div class="cs-box-flex1">
+							<!--<div>武汉通江汉路客服点：武汉市江汉区京汉大道822号前进五路路口（亚洲心脏病医院斜对面）</div>
+							<div>周一~周五 8:30~12:00;13:00~17:00</div>
+							<div>周六 8:30~12:00;13:00~16:00</div>-->
+						 <input type="hidden" id="shcoolTypeInput" />
+				                <div class="cs-box-flex1 sel-schooltype">
+				                    <select name="schooltype" id="schooltype">
+				                      <option value=""></option>
+				                        <!--<option value="S">小学</option>
+				                        <option value="ZX">初中</option>
+				                        <option value="GZ">高中</option>
+				                        <option value="ZZ">中职</option>
+				                        <option value="TS">特殊学校</option>-->
+				                    </select>
+				                </div>
+				                <ul class="netUl" style="display: none;">
+				                	<li><p>姓名:</p><span></span></li>
+				                	<li><p>电话:</p><span></span></li>
+				                	<li><p>地址:</p><span style=""></span></li>
+				                	<li><p>营业时间:</p><span></span></li>
+				                </ul>
+						</div>
+					</div>
+					<p class="cs-ziqutou">(预计15个工作日可领取)</p>
+				</div>
+
+			</div>
+
+			<div class="clear" style="height: 3rem;">&nbsp;</div>
+		</div>
+
+
+		<div class="cs-ft-div cs-width100">
+			<div class="cs-box">
+				<div class="cs-box-flex1 footer-text">
+					合计：<span class="cs-countprice cs-color1">￥</span>
+				</div>
+				<div class="btn-sure-pay">确认付款</div>
+			</div>
+		</div>
+	</div>
+
+<!--<script type="text/javascript" src="js/picker.min.js" ></script>
+<script type="text/javascript" src="js/city.js" ></script>
+<script type="text/javascript" src="js/index.js" ></script>-->
+
+<script type="text/javascript">
+var pay_fee = 3000;
+var _identifid = 'ohM8Fj3ODToHzSUJaBvhRs5tuvK0';
+if (_identifid == "" || _identifid =="undefined") {
+	location.href = 'https://whtpay.whbaw.cn/paytest/stucard_index.html';
+}
+//检查地址
+function checkadr(jsonobj) {
+	var adr_receiname =$(".adr_receiname").val();
+	if (!adr_receiname || adr_receiname == "" || $.trim(adr_receiname) == "") {
+		alert('请输入收件人姓名');
+		return false;
+	}
+	jsonobj['receiname']= $.trim(adr_receiname);  //收件人
+	
+	var adr_receimob =$(".adr_receimob").val();
+	if (!adr_receimob || adr_receimob == "" || $.trim(adr_receimob) == "") {
+		alert('请输入收件电话');
+		return false;
+	}
+	jsonobj['receimob']= $.trim(adr_receimob);    //收件电话
+
+	var adr_receiaddr =$(".adr_receiaddr").val();
+	if (!adr_receiaddr || adr_receiaddr == "" || $.trim(adr_receiaddr) == "") {
+		alert('请输入收件地址');
+		return false;
+	}
+	jsonobj['receiaddr']= $.trim(adr_receiaddr);  //收件地址
+	return true;
+}
+//检查地址2
+function checkadr2(jsonobj) {
+	var adr_receiname =$(".adr_receiname").val();
+	if (!adr_receiname || adr_receiname == "" || $.trim(adr_receiname) == "") {
+		alert('请输入收件人姓名');
+		return false;
+	}
+	
+	var adr_receimob =$(".adr_receimob").val();
+	if (!adr_receimob || adr_receimob == "" || $.trim(adr_receimob) == "") {
+		alert('请输入收件电话');
+		return false;
+	}else{
+		  if(!(/^1[34578]\d{9}$/.test(adr_receimob))){ 
+	        alert("手机号码有误，请重填");  
+	        return false; 
+	    } 
+	}
+
+	var adr_receiaddr =$(".adr_receiaddr").val();
+	if (!adr_receiaddr || adr_receiaddr == "" || $.trim(adr_receiaddr) == "") {
+		alert('请输入收件地址');
+		return false;
+	}
+	return true;
+}
+function writeJson3() {
+	var jsonobjstr = localStorage.getItem("stu_card_info");
+	if (!jsonobjstr || jsonobjstr == '') {
+		return false;
+	}
+	var jsonobj = JSON.parse(jsonobjstr);
+	$(".info-ownerName").text(jsonobj['ownerName']);
+	$(".info-gender").text(getGender(jsonobj['gender']));
+	$(".info-inSchoolTime").text(getSchoolName(jsonobj['inSchoolTime']));
+	$(".info-remarkFive").text(jsonobj['remarkFive']);
+	$(".info-telephone").text(jsonobj['remark_two']);
+	$(".info-idCardNumber").text(jsonobj['idCardNumber']);
+
+	$(".adr_receiname").val(jsonobj['receiname']);
+	$(".adr_receimob").val(jsonobj['receimob']);
+	$(".adr_receiaddr").val(jsonobj['receiaddr']);
+}
+
+function payOrder() {
+	var jsonobjstr = localStorage.getItem("stu_card_info");
+	if (!jsonobjstr || jsonobjstr == '') {
+		alert("数据出错，请重新尝试")
+		return false;
+	}
+	var jsonobj = JSON.parse(jsonobjstr);
+	jsonobj['type'] = 1005;
+	
+	jsonobj['openId'] = _identifid;
+	jsonobj['payno'] = '';
+	jsonobj['isPay'] = '';
+	jsonobj['remarkFour'] = '';
+	jsonobj['areaCode'] = '105';
+	jsonobj['auditstate'] = '0';
+	var _flag = $(".choosebox-select").attr("flag");
+	
+	if (_flag == "2") {
+		pay_fee = 2000;
+		$(".cs-countprice").text("￥20.00");
+		jsonobj['isPay'] = '6';
+		jsonobj['receiname']= "";
+		jsonobj['receimob']= "";
+		jsonobj['receiaddr']= "";
+	} else if (_flag == "1") {
+		pay_fee = 3000;
+		$(".cs-countprice").text("￥30.00");
+		jsonobj['isPay'] = '';
+		if (!checkadr(jsonobj)) return false;
+	}
+	jsonobj['amount'] = pay_fee;
+	
+	localStorage.setItem("stu_card_info", JSON.stringify(jsonobj));
+	
+	var _stu_img_idPic1 = localStorage.getItem("stu_img_idPic1");
+	if (!_stu_img_idPic1 || _stu_img_idPic1 == null) {
+		_stu_img_idPic1 = "";
+	}
+	jsonobj['idPic1'] = _stu_img_idPic1;
+	
+	var _stu_img_idPic2 = localStorage.getItem("stu_img_idPic2");
+	if (!_stu_img_idPic2 || _stu_img_idPic2 == null) {
+		_stu_img_idPic2 = "";
+	}
+	jsonobj['idPic2'] = _stu_img_idPic2;
+	
+	var _stu_img_idPic3 = localStorage.getItem("stu_img_idPic3");
+	if (!_stu_img_idPic3 || _stu_img_idPic3 == null) {
+		_stu_img_idPic3 = "";
+	}
+	jsonobj['idPic3'] = _stu_img_idPic3;
+	
+	var _stu_img_idPic4 = localStorage.getItem("stu_img_idPic4");
+	if (!_stu_img_idPic4 || _stu_img_idPic4 == null) {
+		_stu_img_idPic4 = "";
+	}
+	if (!!_stu_img_idPic4 && _stu_img_idPic4 != "") {
+		jsonobj['idPic4'] = _stu_img_idPic4;
+	} else {
+		jsonobj['idPic4'] = "";
+	}
+	
+	$(".btn-sure-pay").text("提交中...");
+	$(".btn-sure-pay").unbind();
+	
+	$.tyPost({
+		option:jsonobj,
+        success: function (data) {
+        	//alert(data);
+        	data = eval('(' + data + ')');
+        	var resultCode = data.resultCode;
+        	var resultData = eval('(' + data.resultData + ')');
+        	
+        	if (resultCode != "1") {
+        		$(".btn-sure-pay").text("确认付款");
+        		$(".btn-sure-pay").unbind();
+        		$(".btn-sure-pay").bind("click", function () {
+        	    	payOrder();
+        	    })
+            	alert(resultData.message);
+            	return false;
+            }
+            
+        	localStorage.clear();
+            var _orderno = resultData['orderno'];
+            //alert("_orderno:" +_orderno);
+            
+            callpay(pay_fee, _orderno);
+        },
+        error:function (XMLHttpRequest, textStatus, errorThrown){
+        	alert("学生信息采集失败");
+        }
+	});
+}
+
+function callpay(payCount, _orderno) {
+    if (typeof WeixinJSBridge == "undefined") {
+	    alert ('请在微信中打开');
+        if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+        } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+            document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+        }
+    } else {
+        jsApiCall(payCount, _orderno);
+    }
+}
+
+function jsApiCall(payCount, _orderno) {
+	$.get("https://whtpay.whbaw.cn/paytest/stucard_payuniform.html", {
+        openid: _identifid,
+        total_fee: payCount,
+        code: '',
+        parameters: '',
+        prepay_id: '',
+        curl_timeout: '30',
+        timeStamp: '1553393728',
+        nonceStr: 'jx6am8i6w4456y3aa3bdoh2wvzn56utv',
+        attach: _orderno//订单号
+    }, function (data, status) {
+        //alert(data);
+        var payuniformJson =JSON.parse(data);
+        var payJsApiParameters = payuniformJson.jsApiParameters;
+        var outTradeNo = payuniformJson.out_trade_no;
+        var payJsApiParametersArr = payJsApiParameters.split(",");
+        var resultApiparameters = new Array();
+        for (var i = 0; i < payJsApiParametersArr.length; i++) {
+            var tmpArr = payJsApiParametersArr[i].split(":");
+            if (i == payJsApiParametersArr.length - 1) {
+                resultApiparameters.push(tmpArr[1].substr(1, tmpArr[1].length - 3));
+            } else {
+                resultApiparameters.push(tmpArr[1].substr(1, tmpArr[1].length - 2));
+            }
+        }
+        var finalApiparameters = {};
+        finalApiparameters['appId'] = resultApiparameters[0];
+        finalApiparameters['timeStamp'] = resultApiparameters[1];
+        finalApiparameters['nonceStr'] = resultApiparameters[2];
+        finalApiparameters['package'] = resultApiparameters[3];
+        finalApiparameters['signType'] = resultApiparameters[4];
+        finalApiparameters['paySign'] = resultApiparameters[5];
+
+        //alert ("得到结果为：" + JSON.stringify(finalApiparameters));
+
+        //new pay channel
+        wx.chooseWXPay({
+        	timestamp:finalApiparameters['timeStamp'],
+        	nonceStr:finalApiparameters['nonceStr'],
+        	package:finalApiparameters['package'],
+        	signType:finalApiparameters['signType'],
+        	paySign:finalApiparameters['paySign'],
+            success: function (res) {
+				// 支付成功后的回调函数
+                    //alert("支付成功，正在查询订单信息！");
+            		var odd_url = "pay_success.html?identifid="+_identifid;
+                	window.location.href = odd_url;
+                
+                    /* var queryPaymentIdArr = new Array();
+                    queryPaymentIdArr['partner'] = '5202';
+                    queryPaymentIdArr['out_trade_no'] = outTradeNo;
+                    var queryPaymentIdSign = signParams(queryPaymentIdArr).split('|')[1];
+                    queryPaymentIdArr['sign'] = queryPaymentIdSign;
+
+                    
+                    $.get("https://whtpay.whbaw.cn/stucard/wxTransIdGetByOutid.html",
+                        {
+                            out_trade_no: outTradeNo,
+                            partner: '5202',
+                            sign: queryPaymentIdSign
+                        }, function (data, status) {
+                        	//alert ('结果：' + data);
+                            //var payInfoJson = eval("(" + data + ")");
+                            //var paymentId = payInfoJson.resp_detail.payment_id;
+                            //var cashFee = payInfoJson.resp_detail.cash_fee;
+                            
+                            var odd_url = "pay_success.html?identifid="+_identifid;
+                            window.location.href = odd_url;
+                    }); */
+           	},
+           	cancel: function(res){
+                alert("您已经取消本次支付，再次支付需从首页面重新进入");
+                $(".btn-sure-pay").text("返回首页");
+                $(".btn-sure-pay").unbind();
+        		$(".btn-sure-pay").bind("click", function () {
+        			window.location.href = "stucard_index.html";
+        	    })
+			},
+
+  			fail: function(res){
+                alert("支付失败，再次支付需从首页面重新进入！");
+                $(".btn-sure-pay").text("返回首页");
+                $(".btn-sure-pay").unbind();
+        		$(".btn-sure-pay").bind("click", function () {
+        			window.location.href = "stucard_index.html";
+        	    })
+            }
+		
+			});
+
+    });
+}
+
+$(function () {
+    //是否需要邮寄
+    var card_fee = localStorage.getItem('card_fee');//卡费用
+	var mail_fee = localStorage.getItem('mail_fee');//邮寄费用
+	var pay_fee = card_fee*1+mail_fee*1;
+	$('.littlePay').html("￥"+(card_fee/100).toFixed(2));//小计
+	$('.youfei').html("￥"+(mail_fee/100).toFixed(2));//油费
+	$(".cs-countprice").text("￥"+(pay_fee/100).toFixed(2));
+	$(".choosebox").click(function () {
+        $(".choosebox").removeClass("choosebox-select");
+        $(this).addClass("choosebox-select");
+        var flag = $(this).attr("flag");
+        $(".cs-adr_rece").addClass("hide");
+        var _ix = parseInt(flag)-1;
+        $($(".cs-adr_rece")[_ix]).removeClass("hide");
+        if (flag == "2") {
+    		pay_fee = card_fee;
+    		$(".cs-countprice").text("￥"+(pay_fee/100).toFixed(2));
+    		initNetHtml();
+    		//$(".cs-notice1").hide();
+    		//$(".cs-notice2").show();
+    	} else if (flag == "1") {
+    		pay_fee = card_fee*1+mail_fee*1;
+    		$(".cs-countprice").text("￥"+(pay_fee/100).toFixed(2));
+    		//$(".cs-notice2").hide();
+    		//$(".cs-notice1").show();
+    	}
+        
+    })
+    
+    writeJson3();
+    //支付
+//  $(".btn-sure-pay").bind("click", function () {
+//  	payOrder();
+//  })
+    
+})			
+			function initNetHtml(){
+				$.ajax({//自取网点
+				type:"post",
+				url:"http://collection.qinguobao.xyz/caiji/nfc/terface4mobilefront",
+				data:{
+					tag:'1008',
+//					open_id:openId,
+				},
+				success:function(data){
+					data = JSON.parse(data);
+					console.log(data);
+					var str = '';
+					for(var i = 0;i<data.length;i++){
+						str+= '<option value='+data[i].id+'>'+data[i].stationName+'</option>'
+					}
+					console.log(str);
+					$('#schooltype').append(str);
+					chooseNet(data);
+				}
+			});
+			}
+			var allData = {}; //所有数据
+			function chooseNet(jsonData){
+				$('#schooltype').mobiscroll().select({
+			        theme: 'mobiscroll',      // Specify theme like: theme: 'ios' or omit setting to use default
+			        lang: 'zh',    // Specify language like: lang: 'pl' or omit setting to use default
+			        display: 'bottom',  // Specify display mode like: display: 'bottom' or omit setting to use default
+			        placeholder:'请选择网点名称',
+			        minWidth: 200,
+			        onSet:function(sobj, inst){  
+			            //显示的是select标签选中的值  
+			            console.log(jsonData);
+			            for(var i = 0;i<jsonData.length;i++){
+			            	if(sobj.valueText==jsonData[i].stationName){
+			            		$('.netUl li').eq(0).find('span').html(jsonData[i].stationName);
+			            		$('.netUl li').eq(1).find('span').html(jsonData[i].stationMobile);
+			            		$('.netUl li').eq(2).find('span').html(jsonData[i].stationAddress);
+			            		$('.netUl li').eq(3).find('span').html(jsonData[i].stationNetTime);
+			            		allData.netID = jsonData[i].id;
+			            	}
+			            }
+			            $('.netUl').show();
+			            
+			        }
+			    });
+			}
+			allData.agencyJson =JSON.parse(localStorage.getItem('agencyJson'))||{};//代办人信息
+			allData.stu_card_info =JSON.parse(localStorage.getItem('stu_card_info'))||{};//办理人信息
+			allData.image_one =localStorage.getItem('stu_img_idPic1');
+			allData.image_two = localStorage.getItem('stu_img_idPic2');
+			allData.image_three = localStorage.getItem('stu_img_idPic3');
+			allData.image_four = localStorage.getItem('stu_img_idPic4');
+			allData.card_fee = localStorage.getItem('card_fee');//卡费用
+			allData.mail_fee = localStorage.getItem('mail_fee');//邮寄费用
+			allData.card_type = localStorage.getItem('card_type');//卡类型
+			
+			var openId = Math.floor(Math.random()*100000);
+			$(".btn-sure-pay").click(function(){//点击结算
+				console.log(allData);
+				payOrder();
+			})
+			
+			function payOrder(){
+				allData.getType = $('.choosebox-select').attr('flag');
+				allData.getType = allData.getType-1;//邮寄方式
+				if(allData.getType==0){//邮寄
+					allData.pay_amount = allData.card_fee+allData.mail_fee;
+					if(!checkadr2()){
+						return;
+					}
+					allData.rec_mobile = $(".adr_receimob").val();
+					allData.rec_name = $(".adr_receiname").val();
+					allData.rec_address = $(".adr_receiaddr").val();
+				}else{//自取
+					allData.pay_amount = allData.card_fee;
+					if(!$('#schooltype_dummy').val()){
+						alert('请选择网点名称!')   
+						return false;
+					}
+				}
+				
+				
+				$(".btn-sure-pay").html('提交中...');
+				$.ajax({
+				type:"post",
+				url:"http://collection.qinguobao.xyz/caiji/nfc/terface4mobilefront",
+				data:{
+					tag:'1003',
+					open_id:'25436',
+					apply_name:allData.stu_card_info.ownerName,
+					apply_number:'',
+					id_card_num:allData.stu_card_info.idCardNumber,
+					gender:allData.stu_card_info.gender,
+					special_card_info:allData.card_type,
+					apply_type:1,
+					pay_amount:allData.pay_amount,//总费用
+					pay_type:0,
+					mail_type:allData.getType,//取件方式
+					image_one:allData.image_one,
+					image_two:allData.image_two,
+					image_three:allData.image_three,
+					image_four:allData.image_four,
+					card_fee:allData.card_fee,  //卡费用
+					relation_to_apply:allData.agencyJson.agencyRelationship,  //代办人关系
+					agent_name:allData.agencyJson.agencyName,//代办人姓名
+					agent_mobile:allData.agencyJson.agencyPhone,//代办人电话
+					agent_address:allData.agencyJson.agencyAddress,//代办人地址
+					station_id:allData.netID,  //自取网点id
+					school_info:111,//学校信息
+					connect_mobile:allData.stu_card_info.telephone,  //联系电话
+					connect_telphone:allData.stu_card_info.remark_two,//联系手机
+					rec_mobile:allData.rec_mobile||'',
+					rec_name:allData.rec_name||'',
+					rec_address:allData.rec_address||'',
+					remark:'',  //备注
+				},
+				success:function(data){
+					console.log(data);
+					data = JSON.parse(data);
+					console.log(data);
+					setTimeout(function(){
+						if(data.returnMsg=='SUCCESS'){
+							window.location.href = './paySuccess.html';
+						}else{
+							alert(data.returnMsg);
+						}
+						
+					},1000)
+				}
+			});
+			}
+			
+			 
+
+</script>
+</body>
+</html>

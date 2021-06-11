@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-stationInfo-add">
+        	<div class="form-group">	
+				<label class="col-sm-3 control-label">省份/直辖市：</label>
+				<div class="col-sm-8">
+					<select name="proId" id="proId" class="form-control" onchange="findCity();" required="required">
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">城市：</label>
+				<div class="col-sm-8">
+					<select name="cityId" id="cityId" class="form-control" onchange="findCounty();" required="required">
+					</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">区县：</label>
+				<div class="col-sm-8">
+					<select name="countyId" id="countyId" required="required" class="form-control">
+					</select>
+				</div>
+			</div> 
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">网点名称：</label>
+				<div class="col-sm-8">
+					<input id="stationName" name="stationName" class="form-control" type="text" maxlength="30" required="required">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">详细地址：</label>
+				<div class="col-sm-8">
+					<input id="stationAddress" name="stationAddress" maxlength="70" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">联系电话：</label>
+				<div class="col-sm-8">
+					<input id="stationMobile" name="stationMobile" maxlength="13" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">联系人：</label>
+				<div class="col-sm-8">
+					<input id="stationConnectPerson" name="stationConnectPerson" maxlength="30" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">网点服务时间：</label>
+				<div class="col-sm-8">
+					<input id="stationNetTime" name="stationNetTime" maxlength="30" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">网点服务信息：</label>
+				<div class="col-sm-8">
+					<input id="stationServerInfo" name="stationServerInfo" maxlength="50" class="form-control" type="text">
+				</div>
+			</div>
+		
+ 			<div class="form-group">
+				<label class="col-sm-3 control-label">网点状态：</label>
+				<div class="col-sm-8">
+					<!-- <input id="stationStatus" name="stationStatus" class="form-control" type="text"> -->
+					<select name="stationStatus" id="stationStatus" class="form-control" required="required">
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remarks" name="remarks" class="form-control" maxlength="70" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "model/stationInfo"
+		$("#form-stationInfo-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-stationInfo-add').serialize());
+	        }
+	    }
+		$(function(){
+			findpName();
+			findStatus();
+		})
+		//初始化查询条件省份/直辖市
+		function findpName(){
+			var options="";
+			$.ajax({
+				type:"post",
+				url:  ctx + "model/sysAreaCity/findPro",
+				dataType: "json",
+				data: ({
+					pID : 0
+				}),
+				success: function (tipInfo)
+				{
+					if(tipInfo.length>0){
+						for(var i=0;i<tipInfo.length;i++){
+							options += '<option value="' + tipInfo[i].id + '">' + tipInfo[i].name + '</option>';
+						}
+						$("#proId").empty().append('<option value="">请选择</option>').append(options);
+					}
+				},
+				//此处添加错误处理
+	    		error:function()
+	    		{
+	    			$.modal.alertWarning('查询省份/直辖市信息异常，请稍后再试！');
+					return;
+				}
+			});
+		}
+		//根据省份/直辖市查询城市
+        function findCity(){
+        	var pID=$("#proId").val();
+        	var options="";
+			$.ajax({
+				type:"post",
+				url:  ctx + "model/sysAreaCity/findPro",
+				dataType: "json",
+				data: ({
+					pID : pID
+				}),
+				success: function (tipInfo)
+				{
+					if(tipInfo.length>0){
+						for(var i=0;i<tipInfo.length;i++){
+							options += '<option value="' + tipInfo[i].id + '">' + tipInfo[i].name + '</option>';
+						}
+						$("#cityId").empty().append('<option value="">请选择</option>').append(options);
+					}
+				},
+				//此处添加错误处理
+	    		error:function()
+	    		{
+	    			$.modal.alertWarning('查询城市信息异常，请稍后再试！');
+					return;
+				}
+			});
+        }
+      //根据城市查询区县
+        function findCounty(){
+        	var pID=$("#cityId").val();
+        	var options="";
+			$.ajax({
+				type:"post",
+				url:  ctx + "model/sysAreaCity/findPro",
+				dataType: "json",
+				data: ({
+					pID : pID
+				}),
+				success: function (tipInfo)
+				{
+					if(tipInfo.length>0){
+						for(var i=0;i<tipInfo.length;i++){
+							options += '<option value="' + tipInfo[i].id + '">' + tipInfo[i].name + '</option>';
+						}
+						$("#countyId").empty().append('<option value="">请选择</option>').append(options);
+					}
+				},
+				//此处添加错误处理
+	    		error:function()
+	    		{
+	    			$.modal.alertWarning('查询区县信息异常，请稍后再试！');
+					return;
+				}
+			});
+        }
+      	//动态加载网点状态
+        function findStatus(){
+  			var options="";
+  			$.ajax({
+  				type:"post",
+  				url:  prefix + "/findStauts",
+  				dataType: "json",
+				data: ({
+					dictType : 'col_station_status'
+				}),
+  				success: function (tipInfo)
+  				{
+  					if(tipInfo.length>0){
+  						for(var i=0;i<tipInfo.length;i++){
+  							options += '<option value="' + tipInfo[i].dictValue + '">' + tipInfo[i].dictLabel + '</option>';
+  						}
+  						$("#stationStatus").empty().append('<option value="">请选择</option>').append(options);
+  					}
+  				},
+  				//此处添加错误处理
+  	    		error:function()
+  	    		{
+  	    			$.modal.alertWarning('查询网点状态信息异常，请稍后再试！');
+  					return;
+  				}
+  			});
+        }
+	</script>
+</body>
+</html>

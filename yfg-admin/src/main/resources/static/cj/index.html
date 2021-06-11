@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>特种优惠卡卡办理</title>
+    <meta charset="utf-8">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link href="css/s_common.css" rel="stylesheet" type="text/css">
+    	<style>
+		 	*{
+		 		margin: 0;
+		 		padding: 0;
+		 	}
+		 	
+		 	html,body{
+		 		height: 100%;
+		 		width: 100%;
+		 		overflow: hidden;
+		 	}
+		 	.wrapLogin{
+		 		position: absolute;
+		 		left: 0;
+		 		top: 0;
+		 		height: 100%;
+		 		width: 100%;
+		 		z-index: 120;
+		 	}
+		 	.pLogin{
+		 		height: 100%;
+		 		width: 100%;
+		 	}
+		 	.pLogin img{
+		 		height: 100%;
+		 		width: 100%;
+		 	}
+		 	#btnSpan{
+		 		position: absolute;
+		 		bottom: 30px;
+		 		height: 100px;
+		 		z-index: 100;
+		 		left: 0;
+		 		width: 50%;
+		 	}
+		 	#btnSpanRight{
+		 		position: absolute;
+		 		bottom: 30px;
+		 		height: 100px;
+		 		z-index: 100;
+		 		right: 0;
+		 		width: 50%;
+		 	}
+		 	.spanBtn{
+		 		width: 24%;
+		 		border-radius: 3px;
+		 		text-align: center;
+		 		color: white;
+		 		height: 34px;
+		 		font-size: 16px;
+		 		line-height: 34px;
+		 		display: block;
+		 		float: left;
+		 		margin-top: 50px;
+		 		position: absolute;
+		 		bottom: 50px;
+		 	}
+		 	.spanBtn img{
+		 		width: 100%;
+		 		height: 100%;
+		 	}
+		 	.xues{
+		 		left: 18%;
+		 	}
+		 	.laonian{
+		 		right: 18%;
+		 	}
+		 	.card-no{
+		 		font-size: 1rem;
+		 	}
+		 	.card-creattime{
+		 		font-size: 1rem;
+		 	}
+		 	.cs-name{
+		 		float: left;
+		 	}
+		 	.cs-state{
+		 		float: right;
+		 	}
+		 </style>
+    <script type="text/javascript" src="js/jquery.min.js"></script>   
+    <script type="text/javascript" src="js/s_common.js"></script>
+    
+    <script type="text/javascript">
+    var _open_id = '2088112739916928';
+    
+    //签名算法
+    function signParams(signArr) {
+        var data = ksort(signArr);
+        var signRet = "";
+        var signWx = "13bac539611fa3d62616c940fe82bb66";
+        for (var item in data) {
+            signRet += (item + "=" + data[item] + "&");
+        }
+        signRet += ("signkey=" + signWx);
+        var sign = hex_md5(signRet).toUpperCase();
+        //return signRet + "&sign=" + sign;
+        return signRet + "|" + sign;
+    }
+    
+    function short_md5(str) {
+    	var md = hex_md5(str);
+    	var md16 = md.substr(8, 16);
+        return md16;
+    }
+    
+    </script>
+</head>
+
+<body class="cs-ix-body">
+<!--<div class="cs-ix-nodata cs-xsk-bg2" style="display: none;">
+ <div class="cs-ix-footer2">
+        <div class="cs-box-flex cs-add-main" style="align-items: center; justify-content: center;">
+            <img alt="" src="images/card_add_icon2.png" style="width: 50%; height: 50%; text-align:center;" /></div>
+        </div>
+    </div>
+    
+</div>-->
+		<div class="wrapLogin" style="display: none;">
+		<p class="pLogin"><img src="images/login.png" /></p>
+		<span id="btnSpan"></span>
+		<span id="btnSpanRight"></span>
+		</div>
+
+
+<div class="cs-ix-page">
+    <div class="cs-ix-list-data" >
+        <!-- 学生卡办理列表 -->
+        <ul id="stulistul">
+            
+        </ul>
+        
+        <div class="clear" style="height: 110px;">&nbsp;</div>
+    </div>
+    
+    <!-- 这里要复制一份 -->
+     <!--<div class="cs-ix-footer2">
+        <div class="cs-box-flex cs-add-main">
+            <img alt="" src="images/card_add_icon2.png" style="width: 50%; height: 50%;" />
+        </div>
+    </div>-->
+   
+</div>
+
+<script type="text/javascript">
+Date.prototype.Format = function(fmt)   
+{ //author: meizz   
+  var o = {   
+    "M+" : this.getMonth()+1,                 //月份   
+    "d+" : this.getDate(),                    //日   
+    "h+" : this.getHours(),                   //小时   
+    "m+" : this.getMinutes(),                 //分   
+    "s+" : this.getSeconds(),                 //秒   
+    "q+" : Math.floor((this.getMonth()+3)/3), //季度   
+    "S"  : this.getMilliseconds()             //毫秒   
+  };   
+  if(/(y+)/.test(fmt))   
+    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
+  for(var k in o)   
+    if(new RegExp("("+ k +")").test(fmt))   
+  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+  return fmt;   
+}
+    
+//var _open_id = 'openid1112345';
+//进入编辑页面
+function gotoEditHtml (obj) {
+	var _pkid = $(obj).attr("pkid");
+	var _state = $(obj).attr("state");
+//	if (_state == "1" || _state == "2" || _state == "5") {
+//		self.location = "view_step1.php?identifid="+_open_id+"&pkid="+_pkid;
+//	} else if (_state == "0" || _state == "3") {
+//		self.location = "edit_step1.php?identifid="+_open_id+"&pkid="+_pkid+"&state="+_state;
+//	}
+	window.location.href = './view_step1.html?id='+_pkid;
+}
+//拼接列表项
+function getItemHtml(arr, photoPath, username, cardno, inSchoolTime, state, pkid, audittime) {
+	arr.push('<li class="cs-list-li" pkid = "'+pkid+'" state="'+state+'" onclick="gotoEditHtml(this)">');
+	arr.push('<div class="cs-list-item">');
+	arr.push('<div class="cs-box">');
+	arr.push('<div class="cs-good-logo"><img src="'+photoPath+'" /></div>');
+	arr.push('<div class="cs-box-flex1 cs-gd-details">');
+	arr.push('<div class="cs-gd-dt-item user-name"><span class="cs-name">'+username+'</span><div class="cs-state">'+getAuditState(state)+'</div></div>');
+	arr.push('<div class="cs-gd-dt-item cs-box"><div class="cs-box-flex1">'+getSchoolName(inSchoolTime)+'</div>');
+	arr.push('</div>');
+	arr.push('<div class="cs-gd-dt-item card-no"><span>身份证号:</span>'+cardno+'</div>');
+	
+	if (typeof(audittime) == undefined || audittime == null ) {
+		arr.push('<div class="cs-gd-dt-item card-creattime">申请时间：'+'</div>');
+	} else {
+		var date = new Date();
+	    date.setTime(audittime.time);
+		arr.push('<div class="cs-gd-dt-item card-creattime">申请时间：'+date.Format("yyyy-MM-dd")+'</div>');
+	}
+	
+	arr.push('</div>');
+	
+	arr.push('</div></li>');
+}
+
+function getDataList () {
+			$.ajax({//查询用户是否注册 详情接口
+				type:"post",
+				url:"http://collection.qinguobao.xyz/caiji/nfc/terface4mobilefront",
+				data:{
+					tag:'1007',
+					open_id:'25436',
+				},
+				success:function(data){
+					data = JSON.parse(data);
+					console.log(data);
+		                var htmlarr = [];
+		                if (!data[0]) {
+		                	$(".wrapLogin").show();
+		                	$("#stulistul").html("");
+		                	return false;
+		                } else {
+		                	$(".cs-ix-nodata").hide();
+		                }
+						
+		                $.each(data, function (i, value) {
+		                	console.log(value)
+//		                	var timeData = new Date(value.time);
+//		                	var year = timeData.getFullYear();
+//		                	var month = timeData.getMonth()+1;
+//		                	var day = timeData.getData();
+//		                	var hour = timeData.getHours();
+//		                	var min = timeData.getMinutes();
+//		                	var appleTime = year+'-'+month+'-'+day+' '+hour+':'+min;
+//		                	console.log(timeData)
+		                //	var applyTime = value.apply_time.year+'-'+value.apply_time.year+'-'+value.apply_time.year+'-'+value.apply_time.year+'-'+value.apply_time.year+'-'+
+		                	getItemHtml(htmlarr, value.image_one, value.apply_name, value.id_card_num, value.inSchoolTime, value.apply_status, value.id, value.apply_time);
+		                })
+		                
+		                
+		                $("#stulistul").html(htmlarr.join(""));
+		                //console.log(cardInfo);
+		          
+				},error:function(){
+					$(".cs-ix-list-data").hide();
+        			$(".wrapLogin").show();
+				}
+			});
+	//学生采集信息查询
+
+}
+
+				
+
+			$(function () {
+				var urlLocation = window.location.href;
+				//window.location.href = 'http://collection.qinguobao.xyz/caiji/nfc/getOpenid'
+//				var openId = urlLocation.split('?')[1].split('&')[0].split('=')[1];
+//				//alert(openId);
+//				if(!openId){
+//				
+//				}
+	
+	//新增学生卡
+	$('.cs-add-main').click(function () {
+		self.location = "add_step1.php?identifid="+_open_id;
+	})
+	getDataList ();
+	var btnSpan = document.getElementById('btnSpan');
+			var openId = Math.floor(Math.random()*100000);
+			$.ajax({//微信登陆
+				type:"post",
+				url:"http://collection.qinguobao.xyz/caiji/nfc/terface4mobilefront",
+				data:{
+					tag:'1001',
+					open_id:openId,
+				},
+				success:function(data){
+					data = JSON.parse(data);
+					console.log(data);
+				}
+			});
+			btnSpan.onclick = function(){
+				window.location.href = './add_step1.html';
+			}
+			$('#btnSpan').click(function(){
+				window.location.href = './add_step1.html?cardType=1';//学生卡
+				
+			})
+			$('#btnSpanRight').click(function(){
+				window.location.href = './add_step1.html?cardType=2';//老年卡
+			})
+			
+			
+			$.ajax({//查询用户是否注册 详情接口
+				type:"post",
+				url:"http://collection.qinguobao.xyz/caiji/nfc/terface4mobilefront",
+				data:{
+					tag:'1002',
+				},
+				success:function(data){
+					data = JSON.parse(data);
+					console.log(data);
+						var card_fee = data[0].cardFee;
+						var mail_fee = data[0].mailFee;
+						var card_type = data[0].cardType;
+						console.log(card_fee)
+						localStorage.setItem('card_fee',card_fee);
+						localStorage.setItem('mail_fee',mail_fee);
+						localStorage.setItem('card_type',card_type);
+				}
+			});
+			$('.xues').click(function(){
+				window.location.href = './add_step1.html?cardType=1';//学生卡
+			})
+			$('.laonian').click(function(){
+				window.location.href = './add_step1.html?cardType=2';//老年卡
+			})
+	
+})
+</script>
+<div style="display: none">
+<script src="https://s13.cnzz.com/z_stat.php?id=1275154092&web_id=1275154092" language="JavaScript"></script>
+</div>
+</body>
+</html>
+
+

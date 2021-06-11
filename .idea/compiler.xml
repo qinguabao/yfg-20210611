@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="yfg-common" />
+        <module name="yfg-quartz" />
+        <module name="yfg-system" />
+        <module name="yfg-framework" />
+        <module name="yfg-admin" />
+        <module name="yfg-generator" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="yfg" target="1.8" />
+      <module name="yfg-admin" target="1.8" />
+      <module name="yfg-common" target="1.8" />
+      <module name="yfg-framework" target="1.8" />
+      <module name="yfg-generator" target="1.8" />
+      <module name="yfg-quartz" target="1.8" />
+      <module name="yfg-system" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

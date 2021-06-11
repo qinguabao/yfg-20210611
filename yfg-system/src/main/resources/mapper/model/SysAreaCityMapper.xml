@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.model.mapper.SysAreaCityMapper">
+    
+    <resultMap type="SysAreaCity" id="SysAreaCityResult">
+        <result property="iD"    column="ID"    />
+        <result property="nAME"    column="NAME"    />
+        <result property="pID"    column="PID"    />
+        <result property="sORT"    column="SORT"    />
+        <result property="aLEVEL"    column="ALEVEL"    />
+    </resultMap>
+	
+	<sql id="selectSysAreaCityVo">
+        select ID, NAME, PID, SORT, ALEVEL from sys_area_city
+    </sql>
+	
+    <select id="selectSysAreaCityList" parameterType="SysAreaCity" resultMap="SysAreaCityResult">
+        <include refid="selectSysAreaCityVo"/>
+        <where>  
+            <if test="iD != null "> and ID = #{iD}</if>
+             <if test="nAME != null  and nAME != '' "> and NAME like '%${nAME}%'</if>
+             <if test="pID != null "> and PID = #{pID}</if>
+             <if test="sORT != null "> and SORT = #{sORT}</if>
+             <if test="aLEVEL != null "> and ALEVEL = #{aLEVEL}</if>
+         </where>
+    </select>
+    
+    <select id="selectSysAreaCityById" parameterType="Integer" resultMap="SysAreaCityResult">
+        <include refid="selectSysAreaCityVo"/>
+        where ID = #{iD}
+    </select>
+        
+    <insert id="insertSysAreaCity" parameterType="SysAreaCity" useGeneratedKeys="true" keyProperty="iD">
+        insert into sys_area_city
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="nAME != null  and nAME != ''  ">NAME,</if>
+			<if test="pID != null  ">PID,</if>
+			<if test="sORT != null  ">SORT,</if>
+			<if test="aLEVEL != null  ">ALEVEL,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="nAME != null  and nAME != ''  ">#{nAME},</if>
+			<if test="pID != null  ">#{pID},</if>
+			<if test="sORT != null  ">#{sORT},</if>
+			<if test="aLEVEL != null  ">#{aLEVEL},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateSysAreaCity" parameterType="SysAreaCity">
+        update sys_area_city
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="nAME != null  and nAME != ''  ">NAME = #{nAME},</if>
+            <if test="pID != null  ">PID = #{pID},</if>
+            <if test="sORT != null  ">SORT = #{sORT},</if>
+            <if test="aLEVEL != null  ">ALEVEL = #{aLEVEL},</if>
+        </trim>
+        where ID = #{iD}
+    </update>
+
+	<delete id="deleteSysAreaCityById" parameterType="Integer">
+        delete from sys_area_city where ID = #{iD}
+    </delete>
+	
+    <delete id="deleteSysAreaCityByIds" parameterType="String">
+        delete from sys_area_city where ID in 
+        <foreach item="iD" collection="array" open="(" separator="," close=")">
+            #{iD}
+        </foreach>
+    </delete>
+    
+</mapper>
